@@ -1,0 +1,193 @@
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: rgba(255,255,255, 1);
+    --fg: rgba(0,0,0,1);
+    --main-height: 86vh;
+    --menu-bar-height: 7vh;
+    --tab-bar-height: 7vh;
+    font-size: 16px;
+}
+
+  
+body {
+    margin: 0px;
+    padding: 0px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: sans-serif;
+}
+
+.editor-error-line {
+    border-bottom: 1px dashed red !important;
+}
+
+.extra-gutter {
+    width: 20px;
+}
+
+#tooltip {
+    display: none;
+    background: #444;
+    color: #fff;
+    padding: 0.6rem;
+}
+
+.gutter-error-symbol {
+    text-align: center;
+    background: #D00;
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+/* */
+
+.menu-bar {
+    height: var(--menu-bar-height);
+    background: #444;
+    display: flex;
+    align-items: center;
+}
+
+.tab-bar {
+    height: var(--tab-bar-height);
+    background: #444;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.tabs-wrapper {
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    border: none;
+}
+
+.tab {
+    padding: 8px;
+    font-size: 16px;
+    background: white;
+    border-radius: 8px 8px 0 0;
+    color: black;
+    margin-right: 4px;
+    cursor: default;
+    user-select: none;
+}
+
+.tab-inactive:hover {
+    background: #FFF;
+    color: #444;
+    cursor: pointer;
+}
+
+.tab-inactive {
+    background: #666;
+    color: #FFF;
+    font-size: 12px;
+}
+
+.text-editor-wrapper {
+    height: var(--main-height);
+    max-height: var(--main-height);
+    width: 49vw;
+    border-right: 1px solid #DDD;
+}
+
+
+
+.main {
+    height: var(--main-height);
+    max-height: var(--main-height);
+    display: flex;
+    flex-direction: row;
+}
+
+.col-right {
+    background: #FFF;
+    width: 50vw;
+    border: 3px solid white;
+}
+
+#play-iframe {
+    width: 100%;
+    height: 100%;
+    border: 0px solid red;
+}
+
+.assets-view {
+    width: 49vw;
+    padding: 1rem;
+    overflow: auto;
+    border-right: 1px solid #DDD;
+    height: 100%;
+}
+
+#assets-view-sub {
+
+}
+
+.col-left {
+    overflow: auto;
+    border-right: 1px solid #CCC;
+    border: none;
+    overflow: hidden;
+        /*when zooming, col-left border zooms faster than col-right
+    border, so sometimes you get an effect where the left column
+    is one pixel higher. No idea what causes this.
+    putting border around col-left does not fix it, but (at best)
+    hides it a bit.*/
+    border: 3px solid white;
+}
+
+.codemirror {
+    border: none;
+}
+
+.codemirror-scroll {
+    border: none;
+}
+
+.text-editor {
+    border: none;
+}
+
+
+.main {
+    border-bottom: none;
+}
+
+.asset-preview-image {
+    width: 64px;
+    height: auto;
+    max-height: 128px;
+}
+
+
+.asset-entry {
+    border: 1px solid #CCC;
+    margin: 16px;
+    border-radius: 4px;
+}
+
+button {
+    background: rgb(35, 125, 199);
+    color: white;
+    font-size: 14px;
+    font-family: sans-serif;
+    border: none;
+    margin-left: 8px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #DDD;
+    color: #222;
+    cursor: pointer;
+}

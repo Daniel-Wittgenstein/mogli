@@ -1,0 +1,70 @@
+
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>Mogli - Welcome to the Jungle</title>
+
+    <link rel="stylesheet" href="codemirror/codemirror.min.css"></link>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <script src="libs/jquery-3.6.0.min.js"></script>
+
+    <script type="text/javascript" src="codemirror/codemirror.min.js"></script>
+
+    <script src="inkjs/ink-full.js"></script>
+
+    <script src="build/runtime-data.js"></script>
+
+    <script src="app.js"></script>
+    
+    <div id="tooltip"></div>
+
+
+    <div class="tab-bar">
+        <div class="left-tabs-wrapper tabs-wrapper">
+            <div class="tab left-tab" id="tab-story">story</div>
+            <div class="tab left-tab tab-inactive" id="tab-assets">assets</div>
+        </div>
+        <div class="right-tabs-wrapper tabs-wrapper">
+            <div class="tab right-tab" id="tab-play">play</div>
+            <div class="tab right-tab tab-inactive" id="tab-help">help</div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="column col-left">
+            <div class = "text-editor-wrapper tab-content tab-content-left" id="content-story">
+                <div id="text-editor"></div>
+            </div>
+
+            <div class="assets-view tab-content tab-content-left" id="content-assets">
+                <div id="assets-view-sub"></div>
+            </div>
+        </div>
+        <div class="column col-right">
+            <div class="tab-content tab-content-right" id="content-play">
+                <iframe id="play-iframe" id="play-iframe"></iframe>
+            </div>
+
+            <div class="help-view tab-content tab-content-right" id="content-help">HELP</div>
+        </div>
+    </div>
+    <div class="menu-bar">
+        <button class="menu-bar-button" onclick="save()">Download save file</button>
+        <button class="menu-bar-button" onclick="load()">Restore from save file</button>
+        <button class="menu-bar-button" onclick="export_game()">Export game</button>
+        <input style="display: none" type="file" id="choose-file-to-upload-input"/>
+    </div>
+
+</body>
+
+</html>

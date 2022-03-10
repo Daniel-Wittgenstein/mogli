@@ -1,0 +1,55 @@
+
+
+
+
+# For developers and other people who want to hack Mogli
+
+If you have a lot of experience with npm/node/JS you know what to do anyway.
+
+The following is meant for people with little to medium experience in JavaScript who still want to try their hand at hacking the Mogli editor and/or runtime.
+
+## Setup
+
+Download Mogli as a zip file from Github and unzip. Or clone the GitHub repo.
+
+## Testing Mogli
+
+Because of CORS policy, you cannot just open the app in your browser.
+Instead you should start a local server. There are several ways to do this.
+If you have Python3 installed, it can be as easy as navigating to the top Mogli directory and
+typing this in the terminal:
+    python3 -m http.server
+
+The terminal should respond with something similar to:
+    Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/)
+
+Open http://0.0.0.0:8000/ in your browser and the app should work.
+
+## Changing the editor
+
+If you change the Mogli editor files, you do not even have to rebuild the project.
+The changes should just show in your browser (after you hit F5/refresh, of course).
+
+## Changing the Mogli runtime files
+
+The folder "runtime" contains the files that are needed for the actual game to run.
+If you change these files, you need to **rebuild** the project before you can see the changes in the browser. How to build the project:
+
+1. Install node, if you don't have it already.
+
+2. **in the top Mogli directory**, type into your terminal:
+    $ node build-runtime-data.js
+
+3. View changes in the browser.
+
+## Building and refreshing the browser in one
+
+There are of course many ways to do this. Currently I am using a very simple Linux bash script similar to this:
+
+    #!/bin/bash
+    /home/user/.nvm/versions/node/v16.13.1/bin/node whatever-path-you-put-mogli-in/location-of-mogli/build-runtime-data.js &&
+    wmctrl -a "- Google Chrome" &&
+    xdotool sleep 0.2 &&
+    xdotool key F5
+
+On other OSes, of course, you would have to do it differently.
