@@ -23,6 +23,8 @@ function start() {
     init_editor()
 
     init_tabs()
+    
+    init_help()
 
     restore_project_from_state($_INITIAL_PROJECT)
     
@@ -35,6 +37,11 @@ function start() {
     build_and_run()
 }
 
+
+function init_help() {
+    let txt = $_HELP_CONTENT
+    $("#content-help").html(txt)
+}
 
 function init_tabs() {
     $(".tab-content").hide()
