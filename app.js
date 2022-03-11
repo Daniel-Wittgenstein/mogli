@@ -23,7 +23,15 @@ function start() {
     init_editor()
 
     init_tabs()
+
+    restore_project_from_state($_INITIAL_PROJECT)
     
+    if ($_INITIAL_EDITOR_VALUE) {
+        //overrides editor content set by initial project.
+        //very useful for testing
+        code_mirror_editor.setValue($_INITIAL_EDITOR_VALUE)
+    }
+
     build_and_run()
 }
 
@@ -75,7 +83,7 @@ function init_editor() {
     let cm = CodeMirror(document.querySelector('#text-editor'), {
         lineNumbers: true,
         tabSize: 4,
-        value: $_INITIAL_EDITOR_VALUE,
+        value: "",
         gutters: ["extra-gutter"],
     })
 

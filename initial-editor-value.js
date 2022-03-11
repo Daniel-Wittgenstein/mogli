@@ -11,6 +11,6 @@ You are standing in the desert.
 
 #todo some text
 
-#image / name: castle
+#image / name: cat1
 
 `
