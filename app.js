@@ -590,6 +590,9 @@ class AssetsManager {
             .replaceAll("'", "")
             .replaceAll('`', "")
             .replaceAll("#", "")
+            .replaceAll("/", "")
+            .replaceAll(":", "")
+            .trim()
     }
     
     rename_asset(old, tnew) {

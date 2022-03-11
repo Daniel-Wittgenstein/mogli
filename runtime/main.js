@@ -52,6 +52,13 @@
     // Main story processing function. Each time this is called it generates
     // all the next content up as far as the next set of choices.
     function continueStory(firstTime) {
+        function incr_delay(t) {
+            delay += t
+        }
+
+        function get_delay(t) {
+            return delay
+        }
 
         var paragraphIndex = 0;
         var delay = 0.0;
@@ -66,9 +73,20 @@
             var paragraphText = story.Continue();
             var tags = story.currentTags;
 
-            mogli.process_tags(tags)
+            //ctx: whatever you want to pass to the moglimanager
+            //from here so it can do its job.
+            let ctx = {
+                //story,
+                incr_delay,
+                get_delay,
+                storyContainer,
+                showAfter,
+            }
+
+            mogli.process_tags(tags, ctx)
 
             var customClasses = [];
+
                         /*
             // Any special tags included with this line
 

@@ -5,7 +5,7 @@ Syntax of Mogli tags:
 Commands can also define "special_commands".
 These are just keys that do not need a value
 (but only when used for this command). If these special commands are provided
-without colon and value they are just initialized to true.
+without colon and value they are just initialized to the string "yes"
 
 All other keys are initialized to the string (!) of value.
 
@@ -18,6 +18,8 @@ class MogliManager {
         this.prop_separator = ":"
         this.commands = {}
         this.load_commands()
+        this.yes = "yes"
+        this.no = "no"
     }
 
     add_command(names, command) {
@@ -28,11 +30,34 @@ class MogliManager {
 
     load_commands() {
         this.add_command(["image", "img"], {
+            do_command_id: "image",
             special_props: {
-                center: true,
+                //center: true,
             }
         })
     }
+
+    do_command_image(text, param, ctx) {
+        console.log("performing image", param, ctx, $_ASSETS)
+        let name = param.name
+        let img = $_ASSETS[name]
+        if (!img) {
+            this.mild_error(text, `No image with name <b>${name}</b> found.`)
+            return
+        }
+        if (img.type !== "image") {
+            this.mild_error(text, `Asset with name <b>${name}</b> is not an image.`)
+            return            
+        }
+
+        let image_el = document.createElement('img')
+        ctx.storyContainer.appendChild(image_el)
+        image_el.src = img.data
+        ctx.showAfter(ctx.get_delay(), image_el)
+        ctx.incr_delay(200.0)
+
+    }
+
 
     mild_error(...args) {
         //you should only use mild_error if ignoring the error
@@ -56,13 +81,19 @@ class MogliManager {
         throw msg
     }
 
-    process_tags(tags) {
+    process_tags(tags, ctx) {
         for (let tag of tags) {
-            this.process_tag(tag)
+            let res = this.parse_tag(tag)
+            if (!res) continue
+            this.perform_command(tag, res.command, res.key_value_store, ctx)
         }
     }
 
-    process_tag(tag) {
+    perform_command(tag, command, store, ctx) {
+        this["do_command_" + command.do_command_id](tag, store, ctx, command)
+    }
+
+    parse_tag(tag) {
         if (!this.first_tag_read) {
             //first tag must be title. so ignore it.
             this.first_tag_read = true
@@ -77,9 +108,8 @@ class MogliManager {
         first_word = first_word.trim().toLowerCase()
         rest = rest.trim()
 
-        console.log(first_word,"---", rest)
-
-        if ( first_word === "note" || first_word === "n" ) {
+        if ( first_word === "note" || first_word === "n"
+            || first_word === "todo" ) {
             //comment. ignore.
             return
         }
@@ -104,23 +134,32 @@ class MogliManager {
             let key
             let value
             if (command.special_props && command.special_props[part.toLowerCase()]) {
-                let key = part.toLowerCase()
-                let value = true
+                key = part.toLowerCase()
+                value = this.yes
             } else {
-                let slices = part.split(this.prop_separator)
-                .map(n => n.trim()).filter(n => n)
-                key = slices[0].toLowerCase()
-                value = slices[1]
-                if (!key || !value) {
+
+                let ix = part.indexOf (this.prop_separator)
+                if (ix === -1) {
                     this.mild_error(tag, `<b>${part}</b> - I expected something like 
                     <b>name: value</b> here.`)
                     return
                 }
+                key = part.substr(0, ix).toLowerCase().trim()
+                value = part.substr(ix + 1).trim()
             }
-
+            obj[key] = value
         }
 
+        return {
+            command: command,
+            key_value_store: obj,
+        }
     }
+
+
+
+
+
 }
 
 

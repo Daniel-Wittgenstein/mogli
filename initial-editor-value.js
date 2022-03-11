@@ -9,6 +9,8 @@ You are standing in the desert.
 
 #note
 
-#image sdd
+#todo some text
+
+#image / name: castle
 
 `
