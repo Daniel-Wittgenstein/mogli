@@ -12,6 +12,11 @@
     </style>
 
 
+    <style>
+        __$% *user_css %$__
+    </style>
+
+
 </head>
 
 <body>
@@ -43,6 +48,9 @@
     <script> __$% runtime/moglimanager.js %$__ </script>    
     <script> __$% runtime/ink-full.js %$__ </script>
     <script> __$% runtime/main.js %$__ </script>
+
+    <script> __$% *user_js %$__ </script>
+
 
 </body>
 </html>

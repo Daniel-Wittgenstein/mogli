@@ -378,6 +378,15 @@ function write_to_iframe(html) {
     )
 }
 
+function split_into_first_word_and_rest(str) {
+    //this returns a trimmed version of both first_word and rest
+    str = str.trim()
+    let ix = str.search(/[\s]/)
+    console.log(ix)
+    if (ix === -1) return [str, ""]
+    return [str.substr(0, ix), str.substr(ix).trim()]
+}
+
 function build() {
     let res = build_html_page()
     if (res.error) { return res }
@@ -386,6 +395,11 @@ function build() {
         html: res.html,
     }
 }
+
+function show_non_ink_transpilation_error(err) {
+    write_to_iframe(err.msg)
+}
+
 
 function build_html_page() {
     const untitled = `untitled story (the very first line of your story script should be: # Title of your Story)`
@@ -406,8 +420,27 @@ function build_html_page() {
     //Writing "My Title", in the first line instead would not just set the title,
     //but also print that text, which is probably not what you want.
 
-    //todo to do: process %%css %%  %%js %% %%include bla%% here, include, js, css
-    //replace text with spaces, put into html template
+    let extra_blocks = []
+
+    //process "%% content %%"" blocks:
+    text = text.replace(/\%\%[\S\s]*?\%\%/g, (n) => {
+        //remove the block, so the ink compiler
+        //never sees it, but keep the character and line
+        //amount the exact same:
+        let replace_string = n.replace(/[\S\s]/g, (char) => {
+            if (char === "\n") return "\n"
+            return " "
+        })
+        n = n.replaceAll("%%", "").trim()
+        let [first, rest] = split_into_first_word_and_rest(n)
+        console.log(first, rest)
+        first = first.replace(":", "")
+        extra_blocks.push({
+            command: first,
+            content: rest,
+        })
+        return replace_string
+    })
 
     let result = compile(text)
 
@@ -438,7 +471,46 @@ function build_html_page() {
         if (!runtime_data[n]) throw `File '${n}' is missing?`
     }
 
+    let collector = {}
+
+    //process extra block:
+    for (let extra_block of extra_blocks) {
+        let key = false
+        let c = extra_block.command.toLowerCase()
+        let cont = extra_block.content
+        if (c === "js" || c === "javascript") {
+            key = "js"
+        } else if (c === "css") {
+            key = "css"
+        } else {
+            let txt = `Inside a <b>%% ... %% block</b>, I found
+            <b>${c}</b> as the first word, but this is not a
+            valid command for a %% block. The first word should be (for example)
+            <b>js</b> or <b>css</b>.`
+            if (c === "") {
+                txt = `I found an empty <b>%% block</b>. This is not allowed.`
+            }
+            show_non_ink_transpilation_error(
+                {
+                    msg: txt,
+                }
+            )
+            return {
+                error: true,
+            }
+        }
+        if (key) {
+            let separator = "\n\n\n"
+            if (key === "js") separator = "\n\n;\n\n"
+            if (!collector[key]) collector[key] = ""
+            collector[key] += cont + separator
+        }
+    }
+
     let html_template = runtime_data["runtime/index.html-template"].content
+
+    runtime_data["*user_js"] = collector.js ? collector.js : ""
+    runtime_data["*user_css"] = collector.css ? collector.css : ""
 
     runtime_data["*asset_loader_script"] = `<script>$_ASSETS = ` +
         JSON.stringify(assets_manager.assets) + "</script>"

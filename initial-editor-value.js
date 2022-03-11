@@ -13,4 +13,14 @@ You are standing in the desert.
 
 #image / name: cat1
 
+%% css
+
+body {
+    background: blue !important;
+}
+
+%%
+
+
+
 `
