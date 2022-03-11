@@ -406,6 +406,9 @@ function build_html_page() {
     //Writing "My Title", in the first line instead would not just set the title,
     //but also print that text, which is probably not what you want.
 
+    //todo to do: process %%css %%  %%js %% %%include bla%% here, include, js, css
+    //replace text with spaces, put into html template
+
     let result = compile(text)
 
     if (result.error) {
@@ -690,9 +693,14 @@ class AssetsManager {
             let parts = file.type.split("/")
             let type = parts[0]
             let subtype = parts[1]
-            let name = that.sanitize_asset_name(
-                file.name.split(".")[0] + Math.random()
-            )
+            let org_name = that.sanitize_asset_name( file.name.split(".")[0] )
+            let name = org_name
+            let nr = 1 //this way we start with number 2, so we have: cat, cat2 etc.
+            while (that.assets[name]) {
+                nr += 1
+                name = org_name + nr
+            }
+
             if (type !== "image" && type !== "audio") {
                 alert("Asset must be image or mp3 audio file.")
                 return
