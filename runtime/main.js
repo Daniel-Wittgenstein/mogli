@@ -1,4 +1,8 @@
+
+
 (function(storyContent) {
+
+    const mogli = new MogliManager()
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -62,8 +66,12 @@
             var paragraphText = story.Continue();
             var tags = story.currentTags;
 
-            // Any special tags included with this line
+            mogli.process_tags(tags)
+
             var customClasses = [];
+                        /*
+            // Any special tags included with this line
+
             for(var i=0; i<tags.length; i++) {
                 var tag = tags[i];
 
@@ -139,6 +147,7 @@
                     }
                 }
             }
+            */
 
             // Create paragraph element (initially hidden)
             var paragraphElement = document.createElement('p');
@@ -378,5 +387,6 @@
             document.body.classList.toggle("dark");
         });
     }
+
 
 })(storyContent);

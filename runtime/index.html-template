@@ -16,6 +16,8 @@
 
 <body>
 
+    <div id="error-notifier"></div>
+
     <div class="outerContainer">
         <h3 class="written-in-ink"><a href="https://www.inklestudios.com/ink">WRITTEN IN INK</a></h3>
 
@@ -37,7 +39,8 @@
 
     __$% *asset_loader_script %$__
     __$% *story %$__
-    
+
+    <script> __$% runtime/moglimanager.js %$__ </script>    
     <script> __$% runtime/ink-full.js %$__ </script>
     <script> __$% runtime/main.js %$__ </script>
 

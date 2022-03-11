@@ -266,3 +266,20 @@ body.dark {
     font-family: sans-serif;
     color: red;
 }
+
+#error-notifier {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: rgb(250, 191, 191, 0.9);
+    font-family: sans-serif;
+    padding: 16px;
+    font-size: 16px;
+    z-index: 9000;
+    display: none;
+    border-radius: 8px;
+}
+
+.error-notifier-p {
+    color: black;
+}

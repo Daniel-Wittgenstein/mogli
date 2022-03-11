@@ -27,6 +27,7 @@ the app, the finished deployed app is client-side.
 let files = [
     "runtime/index.html-template",
     "runtime/main.js",
+    "runtime/moglimanager.js",
     "runtime/ink-full.js",
     "runtime/style.css",
 ]

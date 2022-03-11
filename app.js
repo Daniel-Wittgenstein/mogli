@@ -8,7 +8,7 @@ RELEVANT LINKS:
 
 */
 
-//settings MUST be jsonifiable object
+
 let settings = {}
 
 $(window).on("load", start)
@@ -75,7 +75,7 @@ function init_editor() {
     let cm = CodeMirror(document.querySelector('#text-editor'), {
         lineNumbers: true,
         tabSize: 4,
-        value: 'Hello World '+ "\n".repeat(600),
+        value: $_INITIAL_EDITOR_VALUE,
         gutters: ["extra-gutter"],
     })
 
@@ -418,6 +418,7 @@ function build_html_page() {
     let files = [
         "runtime/index.html-template",
         "runtime/main.js",
+        "runtime/moglimanager.js",
         "runtime/ink-full.js",
         "runtime/style.css",
     ]
