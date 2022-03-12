@@ -40,13 +40,52 @@ Add custom CSS blocks:
 Display an image. The image name should match the name you have given
 to the image in the assets panel:
 
-    # image / name: castle 
+    # image / name: cat3
 
 
 For your convenience, Mogli includes jQuery into your game
 (it's just 90kb), so you can use jQuery features, too:
 
     #js $("#element-id").hide()
+
+Play an audio. The audio name should match the name you have given
+to the audio in the assets panel:
+
+    # audio / name: purr
+
+Play an audio with adjusted volume. Volume is a
+number from 0.0 (mute) to 1.0 (full volume):
+
+        #audio / name: purr / volume: 0.6
+
+Loop an audio:
+
+    #audio / name: purr / volume: 0.75 / loop
+
+Assign an id to an audio, so you can manipulate it later. The id
+can consist of letters, numbers, the underscore and the minus symbol:
+
+    #audio / name: purr / id: my-purr-audio / loop
+
+Stop a sound using the sound's id:
+
+    #stop_audio / id: my-purr-audio
+
+Pause a sound using the sound's id:
+
+    #pause_audio / id: my-purr-audio
+
+Resume playing a stopped or paused sound:
+
+    #resume_audio / id: my-purr-audio
+
+Define a sound as initially muted and start playing it later:
+
+    #audio / name: purr / id: my-purr-audio / muted
+
+    (...)
+
+    #resume_audio / id: my-purr-audio
 
 
 `

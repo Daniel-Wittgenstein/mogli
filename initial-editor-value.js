@@ -6,7 +6,7 @@ You are standing in an alleyway.
 
 #audio / name: purr / loop / id: my-audio
 
-#stop id: my-audio
+#stop_audio id: my-audio
 
 #image / name: cat3
 
