@@ -93,5 +93,18 @@ Define a sound as initially muted and start playing it later:
 
     #resume_audio / id: my-purr-audio
 
+Adding a title to your game is a bit different than in standard Ink.
+Add a title by adding this line anywhere in your story:
+
+    %%title My Great Story %%
+
+You can output HTML in your story. Just write the HTML like you normally would:
+
+    === foresta
+
+    Nel mezzo del cammin di nostra vita, mi ritrovai per
+    una selva <span style="background: black; color: white;">oscura</span>, ché
+    la diritta via era <b>smarrita</b>.
+
 
 `

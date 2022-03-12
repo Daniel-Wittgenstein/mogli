@@ -423,23 +423,9 @@ function show_non_ink_transpilation_error(err) {
 
 
 function build_html_page() {
-    const untitled = `untitled story (the very first line of your story script should be: # Title of your Story)`
+    const untitled = `untitled story`
 
     let text = editor_get_value()
-
-    let first_line = text.match(/.*($|\n)/)[0]
-    
-    let the_title = first_line.replace("#", "").trim()
-
-    if (!the_title) the_title = untitled
-
-    //the first line sans the first # (if there is any) automatically becomes the title
-    //but is NOT discarded -> it is passed on to the Ink compiler.
-    //the correct way to set a title therefore is to put
-    //# My Title
-    //in the very first line! Ink will treat this just as any old tag
-    //Writing "My Title", in the first line instead would not just set the title,
-    //but also print that text, which is probably not what you want.
 
     let extra_blocks = []
 
@@ -496,6 +482,8 @@ function build_html_page() {
 
     let collector = {}
 
+    let the_title = untitled
+
     //process extra block:
     for (let extra_block of extra_blocks) {
         let key = false
@@ -505,6 +493,8 @@ function build_html_page() {
             key = "js"
         } else if (c === "css") {
             key = "css"
+        } else if (c === "title") {
+            the_title = cont
         } else {
             let txt = `Inside a <b>%% ... %% block</b>, I found
             <b>${c}</b> as the first word, but this is not a

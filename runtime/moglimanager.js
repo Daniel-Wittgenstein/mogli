@@ -17,7 +17,6 @@ class MogliManager {
         this.story = story
         this.continueStory = continueStory
 
-        this.first_tag_read = false
         this.item_separator = "/"
         this.prop_separator = ":"
         this.commands = {}
@@ -109,7 +108,7 @@ class MogliManager {
             this.mild_error(text, `Asset with name <b>${name}</b> is not an audio.`)
             return            
         }
-        
+
         if (!param.volume && param.volume != 0) param.volume = 1.0 //default value if unspecified
         if (!param.mute && param.mute != 0) param.mute = false //default value if unspecified
 
@@ -182,11 +181,7 @@ class MogliManager {
     }
 
     parse_tag(tag) {
-        if (!this.first_tag_read) {
-            //first tag must be title. so ignore it.
-            this.first_tag_read = true
-            return
-        }
+
         tag = tag.trim()
         let first_word
         let rest = tag.replace(/.*?(\s|$)/, (n) => {

@@ -1,6 +1,8 @@
 /* very useful for testing. */
 
-$_INITIAL_EDITOR_VALUE = `#My Great Story
+$_INITIAL_EDITOR_VALUE = `
+
+%%title My Great Story %%
 
 You are standing in an alleyway.
 
