@@ -99,6 +99,7 @@ function init_editor() {
         tabSize: 4,
         value: "",
         gutters: ["extra-gutter"],
+        lineWrapping: true,
     })
 
     cm.setSize("100%", "100%")
