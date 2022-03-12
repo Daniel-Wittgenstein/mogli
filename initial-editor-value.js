@@ -2,24 +2,21 @@
 
 $_INITIAL_EDITOR_VALUE = `#My Great Story
 
-You are standing in the desert.
+You are standing in an alleyway.
 
+#image / name: cat3
 
-#n
+* Go West! -> gowest
 
-#note
+=== gowest
 
-#todo some text
+You went west.
 
-#image / name: cat1
+-> DONE
 
-%% css
+=== every_turn
+Hi there!!!
 
-body {
-    background: blue !important;
-}
-
-%%
 
 
 

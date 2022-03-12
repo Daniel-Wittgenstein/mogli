@@ -30,6 +30,8 @@ let files = [
     "runtime/moglimanager.js",
     "runtime/ink-full.js",
     "runtime/style.css",
+    "runtime/jquery-3.6.0.min.js",        
+    "runtime/howler.core.min.js",       
 ]
 
 let out = "build/runtime-data.js"

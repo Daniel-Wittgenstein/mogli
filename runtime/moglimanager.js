@@ -12,7 +12,11 @@ All other keys are initialized to the string (!) of value.
 */
 
 class MogliManager {
-    constructor() {
+    constructor(story, continueStory) {
+        /* story: the ink story */
+        this.story = story
+        this.continueStory = continueStory
+
         this.first_tag_read = false
         this.item_separator = "/"
         this.prop_separator = ":"
@@ -22,6 +26,8 @@ class MogliManager {
         this.no = "no"
         window.onerror = this.on_error.bind(this)
     }
+
+
 
     on_error(e) {
         console.log("ERROR", e)
@@ -41,10 +47,7 @@ class MogliManager {
                 //center: true,
             }
         })
-        
-
     }
-
 
     do_command_image(text, param, ctx) {
         console.log("performing image", param, ctx, $_ASSETS)

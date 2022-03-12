@@ -18,7 +18,6 @@ let assets_manager
 function start() {
     assets_manager = new AssetsManager()
 
-
     init_load_file_handler()
 
     init_editor()
@@ -35,7 +34,12 @@ function start() {
         code_mirror_editor.setValue($_INITIAL_EDITOR_VALUE)
     }
 
+    build_and_run() //first build does not display entire content
+    //correctly. running build_and_run twice is a dirty fix, but
+    //we should really find the source of the bug. (even running
+    //it twice doesn't always fix it.)
     build_and_run()
+    
 }
 
 
@@ -66,7 +70,7 @@ function init_tabs() {
     //testing only:
     //select_tab("left-tab", "tab-assets")
     
-    select_tab("right-tab", "tab-help")
+    //select_tab("right-tab", "tab-help")
 
 }
 
@@ -482,6 +486,8 @@ function build_html_page() {
         "runtime/moglimanager.js",
         "runtime/ink-full.js",
         "runtime/style.css",
+        "runtime/jquery-3.6.0.min.js",        
+        "runtime/howler.core.min.js",        
     ]
 
     for (let n of files) {

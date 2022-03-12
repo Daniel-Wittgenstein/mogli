@@ -4,11 +4,15 @@
 $_HELP_CONTENTS = `
 
 
-Mogli is a new simple tool for creating text-based games and
-Interactive Fiction stories for the web. Mogli uses Ink under the hood, so
-you can use normal Ink markup to create your story.
-The following just details the special features that Mogli adds.
+Mogli is an experimental tool for creating text-based games and
+Interactive Fiction stories for the web.
 
+Mogli uses 
+[Ink](https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md#5-functions)
+under the hood, so
+you can use normal Ink markup to create your story.
+
+The following just details the special features that Mogli adds.
 
 Add custom JavaScript blocks. The JavaScript is run when the page starts:
 

@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
 
     <title>  __$% *title %$__  </title>
 
@@ -45,9 +45,15 @@
     __$% *asset_loader_script %$__
     __$% *story %$__
 
+
+    <script> __$% runtime/jquery-3.6.0.min.js %$__ </script>
+
+    <script> __$% runtime/howler.core.min.js %$__ </script>
+
     <script> __$% runtime/moglimanager.js %$__ </script>    
     <script> __$% runtime/ink-full.js %$__ </script>
     <script> __$% runtime/main.js %$__ </script>
+
 
     <script> __$% *user_js %$__ </script>
 

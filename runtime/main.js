@@ -2,10 +2,11 @@
 
 (function(storyContent) {
 
-    const mogli = new MogliManager()
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
+
+    const mogli = new MogliManager(story, continueStory)
 
     var savePoint = "";
 
@@ -222,6 +223,7 @@
 
         if( !firstTime )
             scrollDown(previousBottomEdge);
+
 
     }
 
