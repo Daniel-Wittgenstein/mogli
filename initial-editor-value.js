@@ -4,6 +4,10 @@ $_INITIAL_EDITOR_VALUE = `#My Great Story
 
 You are standing in an alleyway.
 
+#audio / name: purr / loop / id: my-audio
+
+#stop id: my-audio
+
 #image / name: cat3
 
 * Go West! -> gowest

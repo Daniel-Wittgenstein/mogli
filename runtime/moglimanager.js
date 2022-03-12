@@ -25,9 +25,8 @@ class MogliManager {
         this.yes = "yes"
         this.no = "no"
         window.onerror = this.on_error.bind(this)
+        this.sounds = {}
     }
-
-
 
     on_error(e) {
         console.log("ERROR", e)
@@ -47,10 +46,81 @@ class MogliManager {
                 //center: true,
             }
         })
+
+        this.add_command(["audio"], {
+            do_command_id: "audio",
+            special_props: {mute: true, loop: true,}
+        })
+
+        this.add_command(["stop_audio"], {
+            do_command_id: "stop_audio",
+        })
+
+        this.add_command(["pause_audio"], {
+            do_command_id: "pause_audio",
+        })
+
+        this.add_command(["resume_audio"], {
+            do_command_id: "resume_audio",
+        })
+
+    }
+
+    normalize_yes(x) {
+        if (x === "yes") return true
+        if (x === "no") return false
+        return !!x
+    }
+
+    do_command_resume_audio(text, param, ctx) {
+        let sound = this.sounds[param.id]
+        if (!sound) return
+        sound.play()
+    }
+
+    do_command_pause_audio(text, param, ctx) {
+        let sound = this.sounds[param.id]
+        if (!sound) return
+        sound.pause()
+    }
+
+    do_command_stop_audio(text, param, ctx) {
+        let sound = this.sounds[param.id]
+        if (!sound) return //could throw error, but currently just ignores
+        //because it would be a bit too strict to throw error (what if you don't
+        //know whether the sound is still playing?)
+        sound.stop()
+    }
+
+    do_command_audio(text, param, ctx) {
+        let name = param.name
+        let audio = $_ASSETS[name]
+        if (!audio) {
+            this.mild_error(text, `No audio with name <b>${name}</b> found.`)
+            return
+        }
+        if (audio.type !== "audio") {
+            this.mild_error(text, `Asset with name <b>${name}</b> is not an audio.`)
+            return            
+        }
+        console.log(11111, param.volume)
+
+        if (!param.volume && param.volume != 0) param.volume = 1.0 //default value if unspecified
+        if (!param.mute && param.mute != 0) param.mute = false //default value if unspecified
+
+        let sound = new Howl({
+            src: audio.data,
+            volume: Number(param.volume),
+            loop: this.normalize_yes(param.loop),
+            mute: this.normalize_yes(param.mute),
+        })
+
+        sound.play()
+
+        if (param.id) this.sounds[param.id] = sound
     }
 
     do_command_image(text, param, ctx) {
-        console.log("performing image", param, ctx, $_ASSETS)
         let name = param.name
         let img = $_ASSETS[name]
         if (!img) {
