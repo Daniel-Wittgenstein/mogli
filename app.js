@@ -377,6 +377,24 @@ function run(html) {
     write_to_iframe(html)
 }
 
+let fullscreen_on = false
+
+function click_fullscreen() {
+
+    fullscreen_on = !fullscreen_on
+
+    if (fullscreen_on) {
+        $("#content-play").addClass("fullscreeny")
+        $("#fullscreen-button").html("Exit")
+    } else {
+        $("#content-play").removeClass("fullscreeny")
+        $("#fullscreen-button").html("Fullscreen")
+    }
+
+}
+
+
+
 function write_to_iframe(html) {
 
     //to be sure that old content is removed: (is this insane?)
