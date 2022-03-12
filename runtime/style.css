@@ -215,11 +215,12 @@ img {
     content: " | ";
 }
 
+
 @media screen and (max-width: 980px) {
     #controls {
         z-index: 2;
         padding-top: 24px;
-        top: 0;
+        top : 0;
         left: 0;
         right: 0;
     }
@@ -293,4 +294,8 @@ body.dark {
 
 .error-notifier-p {
     color: black;
+}
+
+a {
+    cursor: pointer;
 }
