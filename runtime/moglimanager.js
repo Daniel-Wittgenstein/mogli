@@ -82,6 +82,7 @@ class MogliManager {
 
     error (line_text, msg) {
         let el = document.getElementById("error-notifier")
+        if (!el) return
         let m = `<p class="error-notifier-p"><b>Error at line:</b> <i>${line_text}</i></p>
             <p class="error-notifier-p">${msg}</p>
         `

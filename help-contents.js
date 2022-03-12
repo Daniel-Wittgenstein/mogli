@@ -43,6 +43,10 @@ to the image in the assets panel:
     # image / name: castle 
 
 
+For your convenience, Mogli includes jQuery into your game
+(it's just 90kb), so you can use jQuery features, too:
+
+    #js $("#element-id").hide()
 
 
 `
