@@ -339,6 +339,9 @@ function load() {
 
 
 function save() {
+    $("#save-button").html("Download may take a while ...")
+    setTimeout( () => $("#save-button").html("Download save file"), 2000)
+
     let result = get_project_as_json()
     if (result.error) {
         throw `Error while trying to save.`
