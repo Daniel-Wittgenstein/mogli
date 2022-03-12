@@ -1,5 +1,17 @@
 
 
+/*
+
+This file is based on Inky's "main.js" standard web template file.
+
+Inky is released under the MIT license: https://github.com/inkle/inky
+
+I release all changes under the same license.
+
+*/
+
+
+
 (function(storyContent) {
 
 

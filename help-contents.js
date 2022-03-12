@@ -100,7 +100,7 @@ Add a title by adding this line anywhere in your story:
 
 You can output HTML in your story. Just write the HTML like you normally would:
 
-    === foresta
+=== foresta
 
     Nel mezzo del cammin di nostra vita, mi ritrovai per
     una selva <span style="background: black; color: white;">oscura</span>, ché
