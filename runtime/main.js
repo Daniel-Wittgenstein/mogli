@@ -14,6 +14,7 @@ I release all changes under the same license.
 
 (function(storyContent) {
 
+    let debug_log_output = true
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -84,6 +85,8 @@ I release all changes under the same license.
 
             // Get ink to generate the next paragraph
             var paragraphText = story.Continue();
+            if (debug_log_output) console.log("PARAGRAPH TEXT:", paragraphText)
+
             var tags = story.currentTags;
 
             //ctx: whatever you want to pass to the moglimanager
@@ -202,6 +205,7 @@ I release all changes under the same license.
             choiceParagraphElement.classList.add("choice");
             choiceParagraphElement.innerHTML = `<a href='#'>${choice.text}</a>`
             storyContainer.appendChild(choiceParagraphElement);
+            if (debug_log_output) console.log("CHOICE TEXT:", choice.text)
 
             // Fade choice in after a short delay
             showAfter(delay, choiceParagraphElement);
@@ -259,7 +263,10 @@ I release all changes under the same license.
     // Fades in an element after a specified delay
     function showAfter(delay, el) {
         el.classList.add("hide");
-        setTimeout(function() { el.classList.remove("hide") }, delay);
+        setTimeout(function() { 
+            el.classList.remove("hide");
+            if (debug_log_output) console.log("unhiding", el)
+        }, delay);
     }
 
     // Scrolls the page down, but no further than the bottom edge of what you could

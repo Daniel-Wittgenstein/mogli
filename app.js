@@ -34,11 +34,7 @@ function start() {
         code_mirror_editor.setValue($_INITIAL_EDITOR_VALUE)
     }
 
-    build_and_run() //first build does not display entire content
-    //correctly. running build_and_run twice is a dirty fix, but
-    //we should really find the source of the bug. (even running
-    //it twice doesn't always fix it.)
-    build_and_run()
+
     
 }
 
