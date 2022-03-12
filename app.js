@@ -378,6 +378,12 @@ function run(html) {
 }
 
 function write_to_iframe(html) {
+
+    //to be sure that old content is removed: (is this insane?)
+    /*$("#play-iframe").remove()
+    let nu_iframe = `<iframe id="play-iframe"></iframe>`
+    $("#content-play").append(nu_iframe)
+*/
     let el = $("iframe")[0]
     
     el.contentWindow.location.reload(true) //necessary or variables

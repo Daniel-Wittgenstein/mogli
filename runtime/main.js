@@ -14,7 +14,8 @@ I release all changes under the same license.
 
 (function(storyContent) {
 
-    let debug_log_output = true
+
+    let debug_log_output = false
 
     // Create ink story from the content using inkjs
     var story = new inkjs.Story(storyContent);
@@ -62,6 +63,8 @@ I release all changes under the same license.
 
     // Kick off the start of the story!
     continueStory(true);
+
+
 
     // Main story processing function. Each time this is called it generates
     // all the next content up as far as the next set of choices.
@@ -232,10 +235,27 @@ I release all changes under the same license.
             });
         });
 
-        // Extend height to fit
-        // We do this manually so that removing elements and creating new ones doesn't
-        // cause the height (and therefore scroll) to jump backwards temporarily.
-        storyContainer.style.height = contentBottomEdgeY()+"px";
+
+        
+        /* Removed this bit:
+
+            // Extend height to fit
+            // We do this manually so that removing elements and creating new ones doesn't
+            // cause the height (and therefore scroll) to jump backwards temporarily.
+            storyContainer.style.height = contentBottomEdgeY()+"px";
+        
+        I honestly do not understand why the line
+        was here in the first place.
+        It seems to cause a bug where the first time the page loads, the height
+        of the content is too small and the bottom line of the story can be cut
+        off, not showing it at all. I don't fully understand it even after
+        messing around with it for over an hour,
+        but removing the line fixes the bug and does not seem to have
+        any negative effects (hopefully). 
+        
+        */
+
+
 
         if( !firstTime )
             scrollDown(previousBottomEdge);
@@ -299,7 +319,8 @@ I release all changes under the same license.
     // for growing the container, and deciding how far to scroll.
     function contentBottomEdgeY() {
         var bottomElement = storyContainer.lastElementChild;
-        return bottomElement ? bottomElement.offsetTop + bottomElement.offsetHeight : 0;
+        let res = bottomElement ? bottomElement.offsetTop + bottomElement.offsetHeight : 0;
+        return res
     }
 
     // Remove all elements that match the given selector. Used for removing choices after
@@ -378,16 +399,18 @@ I release all changes under the same license.
             document.body.classList.add("dark");
     }
 
+    function clear_and_restart() {
+        removeAll("p");
+        removeAll("img");
+        setVisible(".header", false);
+        restart();
+    }
+
     // Used to hook up the functionality for global functionality buttons
     function setupButtons(hasSave) {
 
         let rewindEl = document.getElementById("rewind");
-        if (rewindEl) rewindEl.addEventListener("click", function(event) {
-            removeAll("p");
-            removeAll("img");
-            setVisible(".header", false);
-            restart();
-        });
+        if (rewindEl) rewindEl.addEventListener("click", clear_and_restart);
 
         let saveEl = document.getElementById("save");
         if (saveEl) saveEl.addEventListener("click", function(event) {
