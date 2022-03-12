@@ -1,6 +1,13 @@
 
 
 
+#content-help {
+    padding: 6px;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    font-size: 16px;
+}
 
 
 code {
@@ -9,7 +16,8 @@ code {
     border: 1px solid #004;
     color: white;
     border-radius: 4px;
-    padding: 16px;
-    margin-left: 16px;
+    padding: 8px;
+    margin-left: 0px;
+    font-size: 15px;
 }
 

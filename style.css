@@ -192,8 +192,3 @@ button:hover {
     cursor: pointer;
 }
 
-#content-help {
-    padding: 16px;
-    overflow: auto;
-    height: 100%;
-}
