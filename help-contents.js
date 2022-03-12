@@ -23,11 +23,17 @@ Add custom JavaScript blocks. The JavaScript is run when the page starts:
         show_alert()
     %%
 
-Run a JS snippet:
+Run a JS snippet (single-line only):
 
     === Forest
         You are in the ...
         #js alert("... forest!")
+
+JS snippets have access to a global object called info. "info.story" provides
+access to the current Ink story, info.continueStory provides access to an internal
+function that continues the story. Careful: if you use this, you are playing with fire!
+
+    #js console.log(info)
 
 Add custom CSS blocks:
 

@@ -64,7 +64,13 @@ class MogliManager {
             do_command_id: "resume_audio",
         })
 
+        this.add_command(["resume_audio"], {
+            do_command_id: "resume_audio",
+        })
+
     }
+
+
 
     normalize_yes(x) {
         if (x === "yes") return true
@@ -103,8 +109,7 @@ class MogliManager {
             this.mild_error(text, `Asset with name <b>${name}</b> is not an audio.`)
             return            
         }
-        console.log(11111, param.volume)
-
+        
         if (!param.volume && param.volume != 0) param.volume = 1.0 //default value if unspecified
         if (!param.mute && param.mute != 0) param.mute = false //default value if unspecified
 
@@ -198,6 +203,11 @@ class MogliManager {
         }
         
         if ( first_word === "js" || first_word === "javascript" ) {
+            let info = {
+                story: this.story,
+                continueStory: this.continueStory,
+            }
+            window.info = info
             try {
                 eval(rest)
             } catch(e) {
