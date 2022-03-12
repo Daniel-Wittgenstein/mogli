@@ -20,6 +20,12 @@ class MogliManager {
         this.load_commands()
         this.yes = "yes"
         this.no = "no"
+        window.onerror = this.on_error.bind(this)
+    }
+
+    on_error(e) {
+        console.log("ERROR", e)
+        document.body.innerHTML = e
     }
 
     add_command(names, command) {
@@ -35,7 +41,10 @@ class MogliManager {
                 //center: true,
             }
         })
+        
+
     }
+
 
     do_command_image(text, param, ctx) {
         console.log("performing image", param, ctx, $_ASSETS)
@@ -111,6 +120,22 @@ class MogliManager {
         if ( first_word === "note" || first_word === "n"
             || first_word === "todo" ) {
             //comment. ignore.
+            return
+        }
+        
+        if ( first_word === "js" || first_word === "javascript" ) {
+            try {
+                eval(rest)
+            } catch(e) {
+                console.log("#js LINE ERROR", e)
+                let txt = `
+                    <p>A JavaScript line you wrote seems to be incorrect.</p>
+                    <p>The error is in this line: #<b>${tag}</b></p>
+                    <p>The browser thinks this is the error:</p>
+                    <p><b>${e}</b></p>`
+                document.body.innerHTML = txt                
+            }
+            
             return
         }
         

@@ -194,4 +194,6 @@ button:hover {
 
 #content-help {
     padding: 16px;
+    overflow: auto;
+    height: 100%;
 }

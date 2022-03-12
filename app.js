@@ -17,7 +17,8 @@ let assets_manager
 
 function start() {
     assets_manager = new AssetsManager()
-    
+
+
     init_load_file_handler()
 
     init_editor()
@@ -39,8 +40,8 @@ function start() {
 
 
 function init_help() {
-    let txt = $_HELP_CONTENT
-    $("#content-help").html(txt)
+    let h = markdown_to_html($_HELP_CONTENTS)
+    $("#content-help").html(h)
 }
 
 function init_tabs() {
@@ -64,6 +65,8 @@ function init_tabs() {
 
     //testing only:
     //select_tab("left-tab", "tab-assets")
+    
+    select_tab("right-tab", "tab-help")
 
 }
 
@@ -385,11 +388,18 @@ function write_to_iframe(html) {
     )
 }
 
+function markdown_to_html(md) {
+    let html
+    let converter = new showdown.Converter()
+    html = converter.makeHtml(md)
+    return html
+}
+
+
 function split_into_first_word_and_rest(str) {
     //this returns a trimmed version of both first_word and rest
     str = str.trim()
     let ix = str.search(/[\s]/)
-    console.log(ix)
     if (ix === -1) return [str, ""]
     return [str.substr(0, ix), str.substr(ix).trim()]
 }
