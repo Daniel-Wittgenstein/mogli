@@ -176,6 +176,30 @@ class MogliManager {
         }
     }
 
+
+    inside_iframe () {
+        try {
+            return window.top !== window.self
+        } catch (e) {
+            return true
+        }
+    }
+
+    show_about() {
+        let href = `https://www.inklestudios.com/ink`
+        if (this.inside_iframe()) href = `#`
+        let link = `<a href="${href}">Find out more about INK</a>`
+        let el = $(`
+        <div class="about-box">
+            <div class="about-box-inner">
+                <p>Created with Ink / Mogli.</p>
+                <p>${link}</p>     
+                <p><a href="#" onclick="$('.about-box').remove()">Close</a></p>           
+            </div>
+        </div>`)
+        $("body").append(el)
+    }
+
     perform_command(tag, command, store, ctx) {
         this["do_command_" + command.do_command_id](tag, store, ctx, command)
     }

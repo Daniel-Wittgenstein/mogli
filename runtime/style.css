@@ -295,3 +295,22 @@ body.dark {
 a {
     cursor: pointer;
 }
+
+.about-box {
+    position: absolute;
+    z-index: 9000;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-box-inner {
+    color: #000;
+    text-align: center;
+}

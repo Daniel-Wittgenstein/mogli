@@ -418,7 +418,13 @@ I release all changes under the same license.
             document.body.classList.add("switched");
             document.body.classList.toggle("dark");
         });
-    }
 
+        let about_el = document.getElementById("about")
+        if (about_el) {
+            about_el.addEventListener("click", function(event) {
+                mogli.show_about()
+            })
+        }
+    }
 
 })(storyContent);
