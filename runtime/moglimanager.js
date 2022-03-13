@@ -85,7 +85,60 @@ class MogliManager {
             do_command_id: "resume_audio",
         })
 
+        this.add_command(["simple_input"], {
+            do_command_id: "simple_input",
+            special_props: {
+                "disabled": true, "focus": true ,
+                "uppercase": true , "lowercase": true ,
+                "capitalize": true , "capitalise": true ,
+                "live": true , "trim": true,
+            },
+        })
+
     }
+
+    do_command_simple_input(text, param, ctx) {
+        function process_val(val) {
+            if (param.trim) val = val.trim()
+            if (param.uppercase) {
+                val = val.toUpperCase();
+            } else if (param.lowercase) {
+                val = val.toLowerCase();
+            } else if (param.capitalize || param.capitalise) {
+                val = val.substr(0, 1).toUpperCase() +
+                    val.substr(1).toLowerCase();
+            }
+            return val
+        }
+
+
+        let lst = ["disabled", "focus", "uppercase", "lowercase",
+            "capitalize", "capitalise", "live", "trim"]
+        for (let x of lst) {
+            param[x] = this.normalize_yes(param[x])
+        }
+
+        let var_name = param.var
+        let inputElement = document.createElement('input');
+        inputElement.classList.add("tag-input");
+        let vv = this.story.variablesState[var_name]
+        inputElement.value = process_val(vv);
+        if (param.disabled) inputElement.disabled = true;
+        ctx.storyContainer.appendChild(inputElement);
+        if (param.focus) inputElement.focus();
+        ctx.showAfter(ctx.get_delay(), inputElement)
+        ctx.incr_delay(200.0)
+
+        inputElement.addEventListener("input", () => {
+            let val = inputElement.value;
+            val = process_val(val)
+            if (param.live) inputElement.value = val
+            /* prevent HTML injection: */
+            val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            this.story.variablesState[param.var] = val;
+        })
+    }
+
 
 
 

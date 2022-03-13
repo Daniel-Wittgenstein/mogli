@@ -3,6 +3,19 @@
 $_INITIAL_EDITOR_VALUE = `
 
 
+-> start
+=== start
+VAR player_name = "Mogli"
+Choose your name:
+#simple_input / var: player_name / trim / capitalize
+* Okay
+
+-
+Your name is {player_name}.
+
+-> DONE
+
+=== gaga
 %%title My Great Story %%
 VAR health = 90
 VAR pet = "black cat"

@@ -170,5 +170,52 @@ You can localize the links in the top bar. Just add this anywhere in your story:
     %%theme hell/dunkel%%
     %%about über%%
 
+## Simple Input
+
+You can display a simple input field where the player can type text, for example
+to choose a name:
+
+    -> start
+    === start
+    VAR player_name = "Mogli"
+    Choose your name:
+    #simple_input / var: player_name / trim / capitalize
+    * Okay
+
+    -
+    Your name is {player_name}.
+
+    -> DONE
+
+These are all options supported by simple_input:
+
+- var: variable_name
+
+    This is mandatory. The variable must have already been defined in Ink
+    (by using Ink's VAR command).
+
+    The text typed by the player will be stored in this variable.
+    
+    If the variable has been set to an empty string (""), the input will be initially
+    empty. If it has been set to another string (like "Baby"), this will be the
+    initial text shown by the input.
+
+- trim: This option removes spaces from the beginning and end of the text.
+    Using this option is recommended.
+
+- uppercase: The text will be converted to UPPERCASE.
+
+- lowercase: The text will be converted to lowercase.
+
+- capitalize (or "capitalise", if you prefer): The Text Will Be Capitalized.
+
+- live: trim, uppercase, lowercase and capitalise transformations will be shown as
+the player types. If live is off, the text stored inside the variable will
+still be transformed, but you won't see the transformation as you type.
+
+- disabled: The input is disabled, meaning it is shown, but cannot be used to
+input anything.
+
+- focus: The input is automatically focused, so the player can start typing right away.
 
 `
