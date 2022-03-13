@@ -47,13 +47,10 @@ class MogliManager {
 
         window.set_text = this.set_text.bind(this)
 
-    }
-
-    test_check() {
-        let list = this.story._prevContainers
-        for (let cont of list) {
-            console.log(1234567, cont.name)
+        this.error_tracker = {
+            last_line: false,
         }
+
     }
 
 
@@ -61,8 +58,24 @@ class MogliManager {
         this.text[prop] = text
     }
 
+    get_error_info_from_tag_line(txt) {
+        let parts = txt.split("$--_.")
+        let result = {}
+        for (let part of parts) {
+            if (!part) continue
+            let index = part.indexOf(":")
+            let first = part.substr(0, index)
+            let last = part.substr(index + 1)
+            result[first] = last 
+        }
+        return result
+    }
+
     on_ink_runtime_error(... args) {
-        console.log("INK RUNTIME ERROR", args, this)
+        console.log("INK RUNTIME ERROR", args, this, this.error_tracker.last_line)
+
+        let error_info = this.get_error_info_from_tag_line(this.error_tracker.last_line)
+
         let list = this.story._prevContainers.reverse()
         let last = false
         for (let cont of list) {
@@ -72,10 +85,17 @@ class MogliManager {
 
         let txt = `<p>${args[0]}</p>`
 
+        txt += `<p>Last visited line number: ${error_info.line_nr}</b></p>
+            <p>Last visited line text: <b>${error_info.line}</b></p>`
+
         if (last) {
             txt += `<p>Last visited knot: <b>${last}</b> (probably)</p>`
         }
         
+        if (window.parent && window.parent.on_ink_runtime_error) {
+            window.parent.on_ink_runtime_error(args[0], txt, error_info)
+        }
+
         document.body.innerHTML = txt
     }
 
@@ -377,6 +397,8 @@ class MogliManager {
         this["do_command_" + command.do_command_id](tag, store, ctx, command)
     }
 
+
+
     parse_tag(tag) {
 
         tag = tag.trim()
@@ -391,6 +413,11 @@ class MogliManager {
         if ( first_word === "note" || first_word === "n"
             || first_word === "todo" ) {
             //comment. ignore.
+            return
+        }
+
+        if (first_word === "$_info") {
+            this.error_tracker.last_line = rest
             return
         }
         

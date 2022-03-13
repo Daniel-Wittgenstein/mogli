@@ -149,28 +149,30 @@ function show_tooltip(event, text) {
     tool_tip.show()
 }
 
+
+    
+function add_mark(line_nr, text) {
+    let lnr = line_nr
+    code_mirror_editor.markText({line: lnr, ch: 0},
+        {line: lnr, ch: 1000}, {
+        className: "editor-error-line"
+    })
+
+    let el = make_marker(text)
+    code_mirror_editor.doc.setGutterMarker(lnr, "extra-gutter", el)
+    $(el).on("mouseover", (e) => {
+        show_tooltip(e, text)
+    })
+
+    $(el).on("mouseout", (e) => {
+        $("#tooltip").hide()
+    })
+    
+}
+
 function handle_errors(error) {
     /* ERROR: line 1: Expected some kind of logic,
     condit…quence within braces: { ... } but saw end of line*/
-    
-    function add_mark(err) {
-        let lnr = err.line_nr - 1
-        code_mirror_editor.markText({line: lnr, ch: 0},
-            {line: lnr, ch: 1000}, {
-            className: "editor-error-line"
-        })
-
-        let el = make_marker(err.text)
-        code_mirror_editor.doc.setGutterMarker(lnr, "extra-gutter", el)
-        $(el).on("mouseover", (e) => {
-            show_tooltip(e, err.text)
-        })
-
-        $(el).on("mouseout", (e) => {
-            $("#tooltip").hide()
-        })
-        
-    }
 
     function handle_error(err) {
         let x = err.match(/line (\d+):/)
@@ -199,8 +201,21 @@ function handle_errors(error) {
         if (err.line_nr < 0) {
             throw `Could not detect line number of error.`
         }
+
+        //remove line number text because it's wrong, since
+        //we duplicated the line numbers to insert extra error info,
+        //replace it with correct line number:
+        err.text = err.text.replace(/line .*?\s/, (n) => {
+            
+            n = n.replace("line", "").replace(":", "").trim()
+            console.log(21218283, n)
+            n = Number(n)
+            n = n / 2
+            return "line " + n + ": "
+        })
+
         err_text += `<p style='${style}'>` + err.text + "</p>"
-        add_mark(err)
+        add_mark( (err.line_nr / 2) - 1, err.text)
     }
 
     write_to_iframe(err_text)
@@ -441,10 +456,31 @@ function build() {
     }
 }
 
+window.parent.on_ink_runtime_error = (ink_error_text, mogli_error_text,
+    error_info) => {
+    //MUST BE GLOBAL, SO IFRAME CAN CALL IT!
+    let lnr = error_info.line_nr
+    if (lnr) {
+        add_mark(Number(lnr) - 1, ink_error_text)
+    }
+
+}
+
 function show_non_ink_transpilation_error(err) {
     write_to_iframe(err.msg)
 }
 
+function process_script_for_error_tracking(txt) {
+    let lines = txt.split("\n")
+    let out = ""
+    let index = 0
+    for (let line of lines) {
+        index ++
+        out += `#$_info $--_.line:${line}$--_.line_nr:${index}\n`
+        out += line + "\n"
+    }
+    return out
+}
 
 function build_html_page() {
     const untitled = `untitled story`
@@ -472,6 +508,10 @@ function build_html_page() {
         })
         return replace_string
     })
+
+
+    text = process_script_for_error_tracking(text)
+
 
     let result = compile(text)
 
