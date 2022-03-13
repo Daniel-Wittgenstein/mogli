@@ -180,6 +180,7 @@ function start() {
                     else if( tag == "CLEAR" || tag == "RESTART" ) {
                         removeAll("p");
                         removeAll("img");
+                        removeAll(".tag-input")
 
                         // Comment out this line if you want to leave the header visible when clearing
                         setVisible(".header", false);
@@ -229,6 +230,9 @@ function start() {
 
                     // Remove all existing choices
                     removeAll(".choice");
+
+                    // Remove all existing inputs
+                    removeAll(".tag-input")
 
                     // Tell the story where to go next
                     story.ChooseChoiceIndex(choice.index);
@@ -406,6 +410,7 @@ function start() {
         function clear_and_restart() {
             removeAll("p");
             removeAll("img");
+            removeAll(".tag-input")
             setVisible(".header", false);
             restart();
         }
@@ -438,6 +443,8 @@ function start() {
 
                 removeAll("p");
                 removeAll("img");
+                removeAll(".tag-input")
+
                 try {
                     let savedState = window.localStorage.getItem('save-state');
                     if (savedState) story.state.LoadJson(savedState);
