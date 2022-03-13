@@ -55,10 +55,11 @@
 
     <script> __$% runtime/moglimanager.js %$__ </script>    
     <script> __$% runtime/ink-full.js %$__ </script>
-    <script> __$% runtime/main.js %$__ </script>
 
 
     <script> __$% *user_js %$__ </script>
+
+    <script> __$% runtime/main.js %$__ </script>
 
 
 </body>

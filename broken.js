@@ -1,7 +1,3 @@
-/* very useful for testing. */
-
-$_INITIAL_EDITOR_VALUE = `
-
 
 %%title My Great Story %%
 VAR health = 90
@@ -25,7 +21,7 @@ You feed the cat.
 ~ food -= 1
 
 -> back
-
+ 
 
 %%js
     function my_update() {
@@ -38,28 +34,3 @@ You feed the cat.
 
 %%
 
-
-
-=== init
-
-#audio / name: purr / loop / id: my-audio
-
-#stop_audio id: my-audio
-
-#image / name: cat3
-
-* Go West! -> gowest
-
-=== gowest
-
-You went west.
-
--> DONE
-
-=== every_turn
-Hi there!!!
-
-
-
-
-`
