@@ -17,7 +17,6 @@ function start() {
 
     ;(function(storyContent) {
 
-
         let debug_log_output = false
 
         // Create ink story from the content using inkjs
@@ -67,8 +66,6 @@ function start() {
         // Kick off the start of the story!
         continueStory(true);
 
-
-
         // Main story processing function. Each time this is called it generates
         // all the next content up as far as the next set of choices.
         function continueStory(firstTime) {
@@ -80,6 +77,8 @@ function start() {
                 return delay
             }
 
+            let counter = 0
+
             var paragraphIndex = 0;
             var delay = 0.0;
 
@@ -88,6 +87,10 @@ function start() {
 
             // Generate story text - loop through available content
             while(story.canContinue) {
+                counter++
+                if (counter >= 400) {
+                    throw `Too much content. Is this an infinite loop?`
+                }
 
                 // Get ink to generate the next paragraph
                 var paragraphText = story.Continue();
@@ -257,8 +260,6 @@ function start() {
             any negative effects (hopefully). 
             
             */
-
-
 
             if( !firstTime )
                 scrollDown(previousBottomEdge);

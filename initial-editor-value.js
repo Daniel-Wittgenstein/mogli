@@ -2,6 +2,7 @@
 
 $_INITIAL_EDITOR_VALUE = `
 
+
 %%title My Great Story %%
 VAR health = 90
 VAR pet = "black cat"
