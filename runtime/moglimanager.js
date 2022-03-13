@@ -25,6 +25,13 @@ class MogliManager {
         this.no = "no"
         window.onerror = this.on_error.bind(this)
         this.sounds = {}
+
+        let info = {
+            story: this.story,
+            continueStory: this.continueStory,
+        }
+        window.info = info
+
     }
 
     on_error(e) {
@@ -222,11 +229,6 @@ class MogliManager {
         }
         
         if ( first_word === "js" || first_word === "javascript" ) {
-            let info = {
-                story: this.story,
-                continueStory: this.continueStory,
-            }
-            window.info = info
             try {
                 eval(rest)
             } catch(e) {
