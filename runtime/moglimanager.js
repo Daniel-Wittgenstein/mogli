@@ -17,6 +17,8 @@ class MogliManager {
         this.story = story
         this.continueStory = continueStory
 
+        this.story.onError = this.on_ink_runtime_error.bind(this)
+
         this.item_separator = "/"
         this.prop_separator = ":"
         this.commands = {}
@@ -32,6 +34,12 @@ class MogliManager {
         }
         window.info = info
 
+        window.parent.test = {
+            story: this.story,
+            mogli: this,
+            check: this.test_check,
+        }
+
         this.text = {}
         this.text.created_with = `Created with Ink / Mogli.`
         this.text.find_out_more_about_ink = `Find out more about INK`
@@ -41,8 +49,34 @@ class MogliManager {
 
     }
 
+    test_check() {
+        let list = this.story._prevContainers
+        for (let cont of list) {
+            console.log(1234567, cont.name)
+        }
+    }
+
+
     set_text(prop, text) {
         this.text[prop] = text
+    }
+
+    on_ink_runtime_error(... args) {
+        console.log("INK RUNTIME ERROR", args, this)
+        let list = this.story._prevContainers.reverse()
+        let last = false
+        for (let cont of list) {
+            let name = cont.name
+            if (name && !name.includes("-")) last = name
+        }
+
+        let txt = `<p>${args[0]}</p>`
+
+        if (last) {
+            txt += `<p>Last visited knot: <b>${last}</b> (probably)</p>`
+        }
+        
+        document.body.innerHTML = txt
     }
 
     on_error(e) {
