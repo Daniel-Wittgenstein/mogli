@@ -3,10 +3,20 @@
 $_INITIAL_EDITOR_VALUE = `
 
 
+* dsdsdsdas
+
+-
 
 -> ga
 
 === ga
+
+=hi
+sd
+
+
+
+asasa
 
 * gaga
 
@@ -14,5 +24,28 @@ $_INITIAL_EDITOR_VALUE = `
 -
  
 dsd
+
+
+* merko
+
+* kerko
+
+-
+
+aasa
+
+ 
+-> barbara
+
+
+=== barbara
+
+ 
+Clerus
+
+*asasasa
+-
+
+
 
 `

@@ -67,16 +67,18 @@ class MogliManager {
     }
 
     get_error_info_from_tag_line(txt) {
-        let parts = txt.split("$--_.")
-        let result = {}
-        for (let part of parts) {
-            if (!part) continue
-            let index = part.indexOf(":")
-            let first = part.substr(0, index)
-            let last = part.substr(index + 1)
-            result[first] = last 
+        if (!txt) {
+            //last_line was not even set, error should
+            //probably be way up:
+            return {
+                none: true,
+            }
         }
-        return result
+
+        return {
+            line_nr: Number(txt),
+            line: txt,
+        }
     }
 
     on_ink_runtime_error(... args) {
@@ -93,8 +95,12 @@ class MogliManager {
 
         let txt = `<p>${args[0]}</p>`
 
-        txt += `<p>Last visited line number: ${error_info.line_nr}</b></p>
-            <p>Last visited line text: <b>${error_info.line}</b></p>`
+        if (error_info.line_nr) {
+            txt += `<p>Last visited line number: ${error_info.line_nr}</b></p>
+                <p>Last visited line text: <b>${error_info.line}</b></p>`
+        } else {
+            error_info.line_nr = 1 //error is probably way up
+        }
 
         if (last) {
             txt += `<p>Last visited knot: <b>${last}</b> (probably)</p>`
@@ -212,6 +218,8 @@ class MogliManager {
 
     do_command_simple_input(text, param, ctx) {
         function process_val(val) {
+            if (!val && val != 0) return val
+            console.log(81, val)
             if (param.trim) val = val.trim()
             if (param.uppercase) {
                 val = val.toUpperCase();
@@ -440,8 +448,9 @@ class MogliManager {
             return
         }
 
-        if (first_word === "$_info") {
+        if (first_word === "y_x_x_x_x_x_x_y") {
             this.error_tracker.last_line = rest
+            console.log("SETTING LAST LINE TO", rest)
             return
         }
         

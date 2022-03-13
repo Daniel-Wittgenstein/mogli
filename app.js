@@ -90,13 +90,18 @@ function make_marker(text) {
 
 
 function init_editor() {
+
+    init_syntax_highlighting()
+
     let cm = CodeMirror(document.querySelector('#text-editor'), {
         lineNumbers: true,
         tabSize: 4,
         value: "",
         gutters: ["extra-gutter"],
         lineWrapping: true,
+        mode: "mogli",
     })
+
 
     cm.setSize("100%", "100%")
 
@@ -485,9 +490,12 @@ function process_script_for_error_tracking(txt) {
     let index = 0
     for (let line of lines) {
         index ++
-        out += `#$_info $--_.line:${line}$--_.line_nr:${index}\n`
-        out += line + "\n"
+        //out += `#$_info $--_.line:${line}$--_.line_nr:${index}\n`
+        //out += "# "+index+"\n"
+        out += "# y_x_x_x_x_x_x_y " + index + "\n"
+        out += line + "\n"  
     }
+    console.log(222, out.split("\n"))
     return out
 }
 

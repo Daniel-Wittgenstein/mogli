@@ -3,7 +3,6 @@
 
 
 
-- editor needs way better error handling
 
 - detecting infinite loops?
 
@@ -12,5 +11,14 @@
 
 - syntax highlighting
 
-- localization
+- implement the features main.js has but we haven't yet (mostly copying
+them into moglimanager)
+
+- multiline comments break because of auto-inserted tag. forbid them, strip them
+    or fix the tag insertion
+
+- inky seems to group tags, so normal command tag gets merged with
+auto-inserted tag in the next line.
+
+
 
