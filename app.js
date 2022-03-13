@@ -495,7 +495,6 @@ mogli_app = (function () {
             out += "# y_x_x_x_x_x_x_y " + index + "\n"
             out += line + "\n"  
         }
-        console.log(222, out.split("\n"))
         return out
     }
 
@@ -517,7 +516,6 @@ mogli_app = (function () {
             })
             n = n.replaceAll("%%", "").trim()
             let [first, rest] = split_into_first_word_and_rest(n)
-            console.log(first, rest)
             first = first.replace(":", "")
             extra_blocks.push({
                 command: first,
