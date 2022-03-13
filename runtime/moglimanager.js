@@ -387,14 +387,17 @@ class MogliManager {
     render_error(text) {
         //doing it via innerhtml destroys all other css classes, styles and contents
         //and that's what we want here 
-        let out = `<div style="font-family:sans-serif;
+        let out = `<div style="position: absolute;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: white; overflow: hidden;">
+        <div style="font-family:sans-serif;
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
             padding: 10px;
             border-radius: 4px;
-        ">😾 ${text}</div>
+            background: white !important;
+            color: #222 !important;
+        ">😾 ${text}</div></div>
         `
-
-        
 
         document.body.innerHTML = out
     }
