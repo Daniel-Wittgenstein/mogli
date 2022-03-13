@@ -3,7 +3,7 @@
 
 $_HELP_CONTENTS = `
 
-
+# Mogli
 Mogli is an experimental tool for creating text-based games and
 Interactive Fiction stories for the web.
 
@@ -12,47 +12,16 @@ Mogli uses
 under the hood, so
 you can use normal Ink markup to create your story.
 
-The following just details the special features that Mogli adds.
+The following guide just details the special features that Mogli adds.
 
-Add custom JavaScript blocks. The JavaScript is run when the page starts:
-
-    %% js
-        function show_alert() {
-            alert("Hi there!")
-        }
-        show_alert()
-    %%
-
-Run a JS snippet (single-line only):
-
-    === Forest
-        You are in the ...
-        #js alert("... forest!")
-
-JS snippets have access to a global object called info. "info.story" provides
-access to the current Ink story, info.continueStory provides access to an internal
-function that continues the story. Careful: if you use this, you are playing with fire!
-
-    #js console.log(info)
-
-Add custom CSS blocks:
-
-    %% css
-        input {
-            border-radius: 8px;
-        }
-    %%
+## Images
 
 Display an image. The image name should match the name you have given
 to the image in the assets panel:
 
     # image / name: cat3
 
-
-For your convenience, Mogli includes jQuery into your game
-(it's just 90kb), so you can use jQuery features, too:
-
-    #js $("#element-id").hide()
+## Audio
 
 Play an audio. The audio name should match the name you have given
 to the audio in the assets panel:
@@ -93,10 +62,14 @@ Define a sound as initially muted and start playing it later:
 
     #resume_audio / id: my-purr-audio
 
+## Setting a Title
+
 Adding a title to your game is a bit different than in standard Ink.
 Add a title by adding this line anywhere in your story:
 
     %%title My Great Story %%
+
+## HTML
 
 You can output HTML in your story. Just write the HTML like you normally would:
 
@@ -105,6 +78,48 @@ You can output HTML in your story. Just write the HTML like you normally would:
     una selva <span style="background: black; color: white;">oscura</span>, ché
     la diritta via era <b>smarrita</b>.
 
+
+
+## JavaScript
+You can add custom JavaScript blocks. The JavaScript is run when the page starts:
+
+    %% js
+        function show_alert() {
+            alert("Hi there!")
+        }
+        show_alert()
+    %%
+
+Run a JS snippet during the game (single-line only):
+
+    === Forest
+        You are in the ...
+        #js alert("... forest!")
+
+JS snippets have access to a global object called info. "info.story" provides
+access to the current Ink story, info.continueStory provides access to an internal
+function that continues the story. Careful: if you use this, you are playing with fire!
+
+    #js console.log(info)
+
+For your convenience, Mogli includes jQuery into your game
+(it's just 90kb), so you can use jQuery features, too:
+
+    #js $("#element-id").hide()
+    
+## CSS
+
+You can add custom CSS blocks:
+
+    %% css
+        input {
+            border-radius: 8px;
+        }
+    %%
+
+
+
+## Showing stats
 
 At the top of the HTML page there is a small box with CSS class "stats".
 That's where you can display some simple permanent text for your game. Consider
@@ -144,6 +159,8 @@ this example:
     
 As you can see, the variables in the top bar automatically update and
 display the current value.
+
+## Localization
 
 You can localize the links in the top bar. Just add this anywhere in your story:
 
