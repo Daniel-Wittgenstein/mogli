@@ -23,9 +23,9 @@ function init_syntax_highlighting() {
             {regex: /\*.*/, token: "choice1"},
 
 
-
-
         ],
+
+
 
     })
 }

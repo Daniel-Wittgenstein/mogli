@@ -5,6 +5,14 @@ $_INITIAL_EDITOR_VALUE = `
 
 * dsdsdsdas
 
+
+%% 
+
+asasa
+sa
+s
+asasaasasas %%
+
 -
 
 -> ga
