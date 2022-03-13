@@ -51,6 +51,14 @@ class MogliManager {
             last_line: false,
         }
 
+        window.on_compilation_error = (text) => {
+            //has to be global so parent editor can call it.
+            //all errors are displayed uniformly by Mogli,
+            //not by the editor. This way we have still the same
+            //errors in the exported game.
+            this.render_error(text)
+        }
+        
     }
 
 
@@ -96,12 +104,12 @@ class MogliManager {
             window.parent.on_ink_runtime_error(args[0], txt, error_info)
         }
 
-        document.body.innerHTML = txt
+        this.render_error(txt)
     }
 
     on_error(e) {
         console.log("ERROR", e)
-        document.body.innerHTML = e
+        this.render_error(e)
     }
 
     add_command(names, command) {
@@ -355,7 +363,7 @@ class MogliManager {
             onclick='document.getElementById("error-notifier").style.display = "none"'>
             Okay</button> */
         el.style.display = "block"
-        el.innerHTML = m
+        this.render_error(m)
         throw msg
     }
 
@@ -376,7 +384,20 @@ class MogliManager {
         }
     }
 
+    render_error(text) {
+        //doing it via innerhtml destroys all other css classes, styles and contents
+        //and that's what we want here 
+        let out = `<div style="font-family:sans-serif;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 10px;
+            border-radius: 4px;
+        ">😾 ${text}</div>
+        `
 
+        
+
+        document.body.innerHTML = out
+    }
 
     show_about() {
         let href = `https://www.inklestudios.com/ink`
@@ -430,8 +451,8 @@ class MogliManager {
                     <p>A JavaScript line you wrote seems to be incorrect.</p>
                     <p>The error is in this line: #<b>${tag}</b></p>
                     <p>The browser thinks this is the error:</p>
-                    <p><b>${e}</b></p>`
-                document.body.innerHTML = txt                
+                    <p><b>${e}</b></p>`   
+                this.render_error(txt)
             }
             
             return
@@ -479,12 +500,7 @@ class MogliManager {
         }
     }
 
-
-
-
-
 }
-
 
 
 

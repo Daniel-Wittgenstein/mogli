@@ -218,7 +218,7 @@ function handle_errors(error) {
         add_mark( (err.line_nr / 2) - 1, err.text)
     }
 
-    write_to_iframe(err_text)
+    display_error(err_text)
 
     //error.errors -> text -> get info from text
     //-> display it accordingly
@@ -392,6 +392,15 @@ function run(html) {
     write_to_iframe(html)
 }
 
+
+function display_error(text) {
+    if ( document.getElementById("play-iframe").contentWindow.
+        on_compilation_error) {
+            document.getElementById("play-iframe").contentWindow
+            .on_compilation_error(text)
+    }
+}
+
 let fullscreen_on = false
 
 function click_fullscreen() {
@@ -417,8 +426,8 @@ function write_to_iframe(html) {
     let nu_iframe = `<iframe id="play-iframe"></iframe>`
     $("#content-play").append(nu_iframe)
 */
-    let el = $("iframe")[0]
-    
+
+    let el = document.getElementById("play-iframe")
     el.contentWindow.location.reload(true) //necessary or variables
     //in iframe will persist (?! is it?)
     
@@ -467,7 +476,7 @@ window.parent.on_ink_runtime_error = (ink_error_text, mogli_error_text,
 }
 
 function show_non_ink_transpilation_error(err) {
-    write_to_iframe(err.msg)
+    display_error(err.msg)
 }
 
 function process_script_for_error_tracking(txt) {
