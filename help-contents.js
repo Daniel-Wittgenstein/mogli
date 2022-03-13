@@ -207,9 +207,10 @@ These are all options supported by simple_input:
 
 - lowercase: The text will be converted to lowercase.
 
-- capitalize (or "capitalise", if you prefer): The Text Will Be Capitalized.
+- capitalize (or "capitalise", if you prefer): Each Word In The Text Will Be Capitalized.
 
-- live: trim, uppercase, lowercase and capitalise transformations will be shown as
+- live: This means that trim, uppercase, lowercase and capitalise
+transformations will be shown as
 the player types. If live is off, the text stored inside the variable will
 still be transformed, but you won't see the transformation as you type.
 
@@ -218,8 +219,7 @@ input anything.
 
 - focus: The input is automatically focused, so the player can start typing right away.
 
-- max = 2000
-    Set the maximum character length you can type in the input. Defaults to 16.
+- max = 2000: sets the maximum character length you can type in the input. Defaults to 16.
 
 - allowed = abcdefghijklmnopqrstuvwxyz
 
@@ -250,5 +250,54 @@ very end it's not recognized.)
 
 Noteworthy: The characters < and > are always disabled in the simple input to
 prevent HTML injections.
+
+## Numeric Input
+
+You can also display an input where the player can choose a number:
+
+    -> start
+    === start
+
+    VAR my_number = 7
+    Pick a number between 1 and 10:
+    #numeric_input / var: my_number / min: 1 / max: 10
+    * Okay
+
+    -
+    The number is {my_number}.
+
+    -> DONE
+
+These are all options supported by numeric_input:
+
+- var: variable_name
+
+    This is mandatory. The variable must have already been defined in Ink
+    (by using Ink's VAR command) and set to a number. The number chosen by
+    the player will be stored in this variable.
+
+- focus
+
+    Automatically focus the input once it's shown.
+
+- float
+    
+    By default the input only allows choosing whole numbers (integers).
+    When this option is enabled, the player can type a floating point number, too.
+    (For example: 3.25)
+ 
+- min: 0
+
+    Minimum value. A number lower than this cannot be chosen. This
+    defaults to 0.
+
+- max: 100
+
+    Maximum value. A number higher than this cannot be
+    chosen. This defaults to 1 billion.
+
+    
+    
+    
 
 `

@@ -5,6 +5,21 @@ $_INITIAL_EDITOR_VALUE = `
 
 -> start
 === start
+
+VAR my_number = 7
+Type a number between 1 and 10:
+#numeric_input / var: my_number / min: 1 / max: 10
+* Okay
+
+-
+The number is {my_number}.
+
+-> DONE
+
+
+
+=== sdadas23h432h3
+
 VAR sequence = ""
 Type a nucleic acid sequence:
 #simple_input / var: sequence / live / uppercase / allowed: ACGT / live

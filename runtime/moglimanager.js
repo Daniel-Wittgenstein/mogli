@@ -95,6 +95,57 @@ class MogliManager {
             },
         })
 
+        this.add_command(["numeric_input"], {
+            do_command_id: "numeric_input",
+            special_props: {
+                "focus": true, "float": true,
+            },
+        })
+
+    }
+
+    do_command_numeric_input(text, param, ctx) {
+        param.float = this.normalize_yes(param.float)
+        param.focus = this.normalize_yes(param.focus)
+        
+        let inputElement = document.createElement('input')
+        inputElement.classList.add("tag-input")
+        inputElement.type = "number"
+        if (!param.min && param.min != "0") param.min = 0
+        if (!param.max && param.max != "0") param.max = 1_000_000_000
+
+        inputElement.value = this.story.variablesState[param.var]
+        inputElement.min = param.min
+        inputElement.max = param.max
+
+        ctx.storyContainer.appendChild(inputElement)
+        if (param.focus) inputElement.focus()
+
+        inputElement.addEventListener("input", () => {
+            let val = inputElement.value
+            let changed = false
+            if (val !== "") {
+                val = Number(val)
+                if (!param.float) {
+                    val = Math.round(val)
+                    changed = true
+                }
+
+                if (val > param.max) {
+                    val = param.max
+                    changed = true
+                }
+                if (val < param.min) {
+                    val = param.min
+                    changed = true
+                }
+            }
+
+            this.story.variablesState[param.var] = val
+            if (changed) inputElement.value = String(val)
+
+        })
+        
     }
 
     do_command_simple_input(text, param, ctx) {
