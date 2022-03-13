@@ -218,4 +218,37 @@ input anything.
 
 - focus: The input is automatically focused, so the player can start typing right away.
 
+- max = 2000
+    Set the maximum character length you can type in the input. Defaults to 16.
+
+- allowed = abcdefghijklmnopqrstuvwxyz
+
+    Restrict the characters that can be typed in the input. Most likely
+    you want to use this in conjunction with the "live" option.
+
+Example:
+
+    -> start
+    === start
+    VAR sequence = ""
+    Type a nucleic acid sequence:
+    #simple_input / var: sequence / live / uppercase / allowed: ACGT / live
+    * Okay
+
+    -
+    The sequence is {sequence}. You created Frankenstein's monster!
+
+    -> DONE
+
+Another example:
+
+allowed = abcdefghijklmnopqrstuvwxyz _
+
+Only allow lowercase letters, space and underscore. (The space is in
+between the z and the underscore. If you put the space at the
+very end it's not recognized.)
+
+Noteworthy: The characters < and > are always disabled in the simple input to
+prevent HTML injections.
+
 `

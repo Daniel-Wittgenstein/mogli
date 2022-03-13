@@ -111,6 +111,13 @@ class MogliManager {
             return val
         }
 
+        if (!param.max) param.max = 16
+
+        let allowed = false
+        if (param.allowed) {
+            allowed = new Set(param.allowed.split(""))
+            console.log(allowed)
+        }
 
         let lst = ["disabled", "focus", "uppercase", "lowercase",
             "capitalize", "capitalise", "live", "trim"]
@@ -123,6 +130,7 @@ class MogliManager {
         inputElement.classList.add("tag-input");
         let vv = this.story.variablesState[var_name]
         inputElement.value = process_val(vv);
+        inputElement.maxLength = param.max
         if (param.disabled) inputElement.disabled = true;
         inputElement.spellcheck = false
         ctx.storyContainer.appendChild(inputElement);
@@ -133,9 +141,15 @@ class MogliManager {
         inputElement.addEventListener("input", () => {
             let val = inputElement.value;
             val = process_val(val)
-            if (param.live) inputElement.value = val
             /* prevent HTML injection: */
-            val = val.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            val = val.replace(/</g, "").replace(/>/g, "");
+            if (allowed) {
+                val = val.replace(/./g, (char) => {
+                    if ( allowed.has(char) ) return char
+                    return ""
+                })
+            }
+            if (param.live) inputElement.value = val
             this.story.variablesState[param.var] = val;
         })
     }

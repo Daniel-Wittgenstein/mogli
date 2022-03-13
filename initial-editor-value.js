@@ -5,13 +5,13 @@ $_INITIAL_EDITOR_VALUE = `
 
 -> start
 === start
-VAR player_name = "Mogli"
-Choose your name:
-#simple_input / var: player_name / trim / capitalize
+VAR sequence = ""
+Type a nucleic acid sequence:
+#simple_input / var: sequence / live / uppercase / allowed: ACGT / live
 * Okay
 
 -
-Your name is {player_name}.
+The sequence is {sequence}. You created Frankenstein's monster!
 
 -> DONE
 
