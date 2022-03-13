@@ -72,7 +72,7 @@
             <div class="tab-content tab-content-right" id="content-play">
                 <div class = "play-dev-tools-bar">
                     <button class="play-dev-tools-button"
-                        id="fullscreen-button" onclick="click_fullscreen()">
+                        id="fullscreen-button" onclick="mogli_app.click_fullscreen()">
                         Fullscreen</button>
                 </div>
                 <iframe id="play-iframe"></iframe>
@@ -82,9 +82,9 @@
         </div>
     </div>
     <div class="menu-bar">
-        <button class="menu-bar-button" id="save-button" onclick="save()">Download save file</button>
-        <button class="menu-bar-button" onclick="load()">Restore from save file</button>
-        <button class="menu-bar-button" onclick="export_game()">Export game</button>
+        <button class="menu-bar-button" id="save-button" onclick="mogli_app.save()">Download save file</button>
+        <button class="menu-bar-button" onclick="mogli_app.load()">Restore from save file</button>
+        <button class="menu-bar-button" onclick="mogli_app.export_game()">Export game</button>
         <input style="display: none" type="file" id="choose-file-to-upload-input"/>
     </div>
 
