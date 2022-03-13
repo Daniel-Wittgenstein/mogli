@@ -106,4 +106,46 @@ You can output HTML in your story. Just write the HTML like you normally would:
     la diritta via era <b>smarrita</b>.
 
 
+At the top of the HTML page there is a small box with CSS class "stats".
+That's where you can display some simple permanent text for your game. Consider
+this example:
+
+    %%title My Great Story %%
+    VAR health = 90
+    VAR pet = "black cat"
+    VAR food = 7
+    
+    #js setInterval(my_update, 500); my_update()
+    
+    -> alley
+    
+    === alley
+    = back
+    
+    You are standing in an alleyway.
+    
+    + Feed your cat
+    
+    -
+    You feed the cat.
+    ~ food -= 1
+    
+    -> back
+     
+    
+    %%js
+        function my_update() {
+            let health = info.story.variablesState["health"]
+            let pet = info.story.variablesState["pet"]
+            let food = info.story.variablesState["food"]
+            $(".stats").html(\`health: \${health} | pet: \${pet} | food ratios: \${food}\`)
+        }
+    %%
+    
+As you can see, the variables in the top bar automatically update and
+display the current value.
+
+
+
+
 `
