@@ -145,7 +145,13 @@ this example:
 As you can see, the variables in the top bar automatically update and
 display the current value.
 
+You can localize the links in the top bar. Just add this anywhere in your story:
 
+    %%restart Neustart%%
+    %%save speichern%%
+    %%load laden%%
+    %%theme hell/dunkel%%
+    %%about über%%
 
 
 `

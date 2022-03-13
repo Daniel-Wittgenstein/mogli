@@ -26,11 +26,11 @@
     <div class="outerContainer">
 
         <div id="controls" class="buttons">
-          <a id="rewind" title="Restart story from beginning">restart</a> |
-          <a id="save" title="Save progress">save</a> |
-          <a id="reload" title="Reload from save point">load</a> |
-          <a id="theme-switch" title="Switch theme">theme</a> |
-          <a id="about" title="About">about</a>
+          <a id="rewind" title="Restart story from beginning"> __$% *restart %$__</a> |
+          <a id="save" title="Save progress">__$% *save %$__</a> |
+          <a id="reload" title="Reload from save point">__$% *load %$__</a> |
+          <a id="theme-switch" title="Switch theme">__$% *theme %$__</a> |
+          <a id="about" title="About">__$% *about %$__</a>
         </div>
 
         <div class="stats">

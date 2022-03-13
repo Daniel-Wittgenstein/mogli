@@ -508,6 +508,13 @@ function build_html_page() {
 
     let the_title = untitled
 
+    let localized_links = ["restart", "save", "load", "theme", "about"]
+
+    let locale = {}
+    for (let p of localized_links) {
+        locale[p] = p //set english defaults
+    }
+
     //process extra block:
     for (let extra_block of extra_blocks) {
         let key = false
@@ -517,6 +524,8 @@ function build_html_page() {
             key = "js"
         } else if (c === "css") {
             key = "css"
+        } else if ( localized_links.includes(c) ) {
+            locale[c] = cont
         } else if (c === "title") {
             the_title = cont
         } else {
@@ -555,6 +564,11 @@ function build_html_page() {
     runtime_data["*story"] = `<script>storyContent = ${json_byte_code}</script>`
 
     runtime_data["*title"] = the_title
+
+    for (let p of localized_links) {
+        runtime_data["*" + p] = locale[p]
+    }
+
 
     //console.log(story, runtime_data, html_template, runtime_data["*story"])
     //console.log(runtime_data["*story"])

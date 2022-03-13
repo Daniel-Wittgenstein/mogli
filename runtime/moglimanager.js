@@ -32,6 +32,17 @@ class MogliManager {
         }
         window.info = info
 
+        this.text = {}
+        this.text.created_with = `Created with Ink / Mogli.`
+        this.text.find_out_more_about_ink = `Find out more about INK`
+        this.text.close = "Close"
+
+        window.set_text = this.set_text.bind(this)
+
+    }
+
+    set_text(prop, text) {
+        this.text[prop] = text
     }
 
     on_error(e) {
@@ -192,16 +203,18 @@ class MogliManager {
         }
     }
 
+
+
     show_about() {
         let href = `https://www.inklestudios.com/ink`
         if (this.inside_iframe()) href = `#`
-        let link = `<a href="${href}">Find out more about INK</a>`
+        let link = `<a href="${href}">${this.text.find_out_more_about_ink}</a>`
         let el = $(`
         <div class="about-box">
             <div class="about-box-inner">
-                <p>Created with Ink / Mogli.</p>
+                <p>${this.text.created_with}</p>
                 <p>${link}</p>     
-                <p><a href="#" onclick="$('.about-box').remove()">Close</a></p>           
+                <p><a href="#" onclick="$('.about-box').remove()">${this.text.close}</a></p>           
             </div>
         </div>`)
         $("body").append(el)

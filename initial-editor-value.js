@@ -8,6 +8,14 @@ VAR health = 90
 VAR pet = "black cat"
 VAR food = 7
 
+%%restart Neustart%%
+%%save speichern%%
+%%load laden%%
+%%theme hell/dunkel%%
+%%about über%%
+
+
+
 #js setInterval(my_update, 500); my_update()
 
 -> alley
