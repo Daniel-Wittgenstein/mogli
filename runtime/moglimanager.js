@@ -124,6 +124,7 @@ class MogliManager {
         let vv = this.story.variablesState[var_name]
         inputElement.value = process_val(vv);
         if (param.disabled) inputElement.disabled = true;
+        inputElement.spellcheck = false
         ctx.storyContainer.appendChild(inputElement);
         if (param.focus) inputElement.focus();
         ctx.showAfter(ctx.get_delay(), inputElement)
