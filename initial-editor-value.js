@@ -2,58 +2,13 @@
 
 $_INITIAL_EDITOR_VALUE = `
 
+%% dssddsa  %%
+-> start
+=== start
 
-* dsdsdsdas
-
-
-%% 
-
-asasa
-sa
-s
-asasaasasas %%
+* hi
 
 -
-
--> ga
-
-=== ga
-
-=hi
-sd
-
-
-
-asasa
-
-* gaga
-
-
--
- 
-dsd
-
-
-* merko
-
-* kerko
-
--
-
-aasa
-
- 
--> barbara
-
-
-=== barbara
-
- 
-Clerus
-
-*asasasa
--
-
 
 
 `

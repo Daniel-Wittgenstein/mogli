@@ -175,68 +175,6 @@ mogli_app = (function () {
         
     }
 
-    function handle_errors(error) {
-        /* ERROR: line 1: Expected some kind of logic,
-        condit…quence within braces: { ... } but saw end of line*/
-
-        function handle_error(err) {
-            let x = err.match(/line (\d+):/)
-            if (!x) {
-                return {
-                    line_nr: -1,
-                    text: err,
-                }
-            }
-            let line_nr = Number( x[0].replace("line ", "").replace(":", "").trim() )
-            return {
-                line_nr: line_nr,
-                text: err,
-            }
-        }
-
-        editor_has_errors = true
-
-        let err_text = ""
-
-        //style for transpiler errors:
-        let style = `font-family: sans-serif; color: #000;`
-
-        for (let err of error.errors) {
-            err = handle_error(err)
-            if (err.line_nr < 0) {
-                throw `Could not detect line number of error.`
-            }
-
-            //remove line number text because it's wrong, since
-            //we duplicated the line numbers to insert extra error info,
-            //replace it with correct line number:
-            err.text = err.text.replace(/line .*?\s/, (n) => {
-                
-                n = n.replace("line", "").replace(":", "").trim()
-                console.log(21218283, n)
-                n = Number(n)
-                n = n / 2
-                return "line " + n + ": "
-            })
-
-            err_text += `<p style='${style}'>` + err.text + "</p>"
-            add_mark( (err.line_nr / 2) - 1, err.text)
-        }
-
-        display_error(err_text)
-
-        //error.errors -> text -> get info from text
-        //-> display it accordingly
-        /*         var issueRegex = /^(ERROR|WARNING|RUNTIME ERROR|RUNTIME WARNING|TODO): ('([^']+)' )?line (\d+): (.*)/;
-            let issueMatches = message.match(issueRegex);
-
-            if(issueMatches){
-                const type = issueMatches[1] as Issue['type'];
-                const filename = issueMatches[3];
-                const lineNumber = parseInt(issueMatches[4]);
-                const msg = issueMatches[5];*/
-    }
-
     function set_editor_state(state) {
         if (!state.is_editor_state) {
             console.log("Not a valid editor state:", state)
@@ -254,6 +192,7 @@ mogli_app = (function () {
     }
 
     function build_and_run() {
+        clear_error_message()
         code_mirror_editor.clearGutter("extra-gutter")
         let res = build()
         if (res.error) return false
@@ -397,15 +336,6 @@ mogli_app = (function () {
         write_to_iframe(html)
     }
 
-
-    function display_error(text) {
-        if ( document.getElementById("play-iframe").contentWindow.
-            on_compilation_error) {
-                document.getElementById("play-iframe").contentWindow
-                .on_compilation_error(text)
-        }
-    }
-
     let fullscreen_on = false
 
     function click_fullscreen() {
@@ -453,13 +383,6 @@ mogli_app = (function () {
     }
 
 
-    function split_into_first_word_and_rest(str) {
-        //this returns a trimmed version of both first_word and rest
-        str = str.trim()
-        let ix = str.search(/[\s]/)
-        if (ix === -1) return [str, ""]
-        return [str.substr(0, ix), str.substr(ix).trim()]
-    }
 
     function build() {
         let res = build_html_page()
@@ -478,10 +401,6 @@ mogli_app = (function () {
             add_mark(Number(lnr) - 1, ink_error_text)
         }
 
-    }
-
-    function show_non_ink_transpilation_error(err) {
-        display_error(err.msg)
     }
 
     function process_script_for_error_tracking(txt) {
@@ -503,29 +422,20 @@ mogli_app = (function () {
 
         let text = editor_get_value()
 
-        let extra_blocks = []
 
-        //process "%% content %%"" blocks:
-        text = text.replace(/\%\%[\S\s]*?\%\%/g, (n) => {
-            //remove the block, so the ink compiler
-            //never sees it, but keep the character and line
-            //amount the exact same:
-            let replace_string = n.replace(/[\S\s]/g, (char) => {
-                if (char === "\n") return "\n"
-                return " "
-            })
-            n = n.replaceAll("%%", "").trim()
-            let [first, rest] = split_into_first_word_and_rest(n)
-            first = first.replace(":", "")
-            extra_blocks.push({
-                command: first,
-                content: rest,
-            })
-            return replace_string
-        })
+        let p = preprocessor.process_content_blocks(text)
+        if (p.error) {
+            handle_preprocessor_error(p.error)
+            return
+        }
+
+        text = p.text
+        let extra_blocks = p.content_blocks
+
 
 
         text = process_script_for_error_tracking(text)
+
 
 
         let result = compile(text)
@@ -596,6 +506,7 @@ mogli_app = (function () {
                         msg: txt,
                     }
                 )
+
                 return {
                     error: true,
                 }
@@ -607,6 +518,7 @@ mogli_app = (function () {
                 collector[key] += cont + separator
             }
         }
+
 
         let html_template = runtime_data["runtime/index.html-template"].content
 
@@ -915,11 +827,108 @@ mogli_app = (function () {
         }
     }
 
+
+    //ERROR HANDLING:
+
+    function handle_errors(error) {
+        /* ERROR: line 1: Expected some kind of logic,
+        condit…quence within braces: { ... } but saw end of line*/
+
+        function handle_error(err) {
+            let x = err.match(/line (\d+):/)
+            if (!x) {
+                return {
+                    line_nr: -1,
+                    text: err,
+                }
+            }
+            let line_nr = Number( x[0].replace("line ", "").replace(":", "").trim() )
+            return {
+                line_nr: line_nr,
+                text: err,
+            }
+        }
+
+        editor_has_errors = true
+
+        let err_text = ""
+
+        //style for transpiler errors:
+        let style = `font-family: sans-serif; color: #000;`
+
+        for (let err of error.errors) {
+            err = handle_error(err)
+            if (err.line_nr < 0) {
+                throw `Could not detect line number of error.`
+            }
+
+            //remove line number text because it's wrong, since
+            //we duplicated the line numbers to insert extra error info,
+            //replace it with correct line number:
+            err.text = err.text.replace(/line .*?\s/, (n) => {
+                
+                n = n.replace("line", "").replace(":", "").trim()
+                console.log(21218283, n)
+                n = Number(n)
+                n = n / 2
+                return "line " + n + ": "
+            })
+
+            err_text += `<p style='${style}'>` + err.text + "</p>"
+            add_mark( (err.line_nr / 2) - 1, err.text)
+        }
+
+        display_error(err_text)
+
+        //error.errors -> text -> get info from text
+        //-> display it accordingly
+        /*         var issueRegex = /^(ERROR|WARNING|RUNTIME ERROR|RUNTIME WARNING|TODO): ('([^']+)' )?line (\d+): (.*)/;
+            let issueMatches = message.match(issueRegex);
+
+            if(issueMatches){
+                const type = issueMatches[1] as Issue['type'];
+                const filename = issueMatches[3];
+                const lineNumber = parseInt(issueMatches[4]);
+                const msg = issueMatches[5];*/
+    }
+
+    function show_non_ink_transpilation_error(err) {
+        display_error(err.msg)
+    }
+
+
+    function handle_preprocessor_error(error) {
+        display_error(error.msg)
+    }
+
+
+
+    function display_error(text) {
+        //actually renders the error in the editor
+        $("iframe").hide()
+        $(".error-displaying-panel").html(text)
+        $(".error-displaying-panel").show()
+    }
+
+    function clear_error_message() {
+        $("iframe").show()
+        $(".error-displaying-panel").html("")
+        $(".error-displaying-panel").hide()
+    }
+
+    function on_runtime_error(text) {
+        display_error(text)
+    }
+   
+
+
+
     return {
         save,
         load,
         export_game,
         click_fullscreen,
+        on_runtime_error,
     }
 
 })()

@@ -21,6 +21,9 @@
 
 <body>
 
+        
+    <script src="utils.js"></script>
+    
     <script src="libs/jquery-3.6.0.min.js"></script>
 
     <script src="libs/showdown.min.js"></script>
@@ -35,6 +38,8 @@
 
     <script src="build/runtime-data.js"></script>
     
+    <script src="preprocessor.js"></script>
+
     <script src="help-contents.js"></script>
 
     <script src="initial-project.js"></script>
@@ -43,7 +48,6 @@
             initial-project-->
 
     <script src="app.js"></script>
-    
 
     <div id="tooltip"></div>
 
@@ -74,6 +78,8 @@
                     <button class="play-dev-tools-button"
                         id="fullscreen-button" onclick="mogli_app.click_fullscreen()">
                         Fullscreen</button>
+                </div>
+                <div class="error-displaying-panel">
                 </div>
                 <iframe id="play-iframe"></iframe>
             </div>

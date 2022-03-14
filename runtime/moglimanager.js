@@ -50,15 +50,6 @@ class MogliManager {
         this.error_tracker = {
             last_line: false,
         }
-
-        window.on_compilation_error = (text) => {
-            //has to be global so parent editor can call it.
-            //all errors are displayed uniformly by Mogli,
-            //not by the editor. This way we have still the same
-            //errors in the exported game.
-            this.render_error(text)
-        }
-        
     }
 
 
@@ -393,21 +384,12 @@ class MogliManager {
     }
 
     render_error(text) {
-        //doing it via innerhtml destroys all other css classes, styles and contents
-        //and that's what we want here 
-        let out = `<div style="position: absolute;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background: white; overflow: hidden;">
-        <div style="font-family:sans-serif;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            padding: 10px;
-            border-radius: 4px;
-            background: white !important;
-            color: #222 !important;
-        ">😾 ${text}</div></div>
-        `
-
-        document.body.innerHTML = out
+        if (window.parent && window.parent.mogli_app
+            && window.parent.mogli_app.on_runtime_error) {
+            //running in editor:
+            window.parent.mogli_app.on_runtime_error(text)
+        }
+        document.body.innerHTML = text
     }
 
     show_about() {
