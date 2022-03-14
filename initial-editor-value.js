@@ -2,11 +2,18 @@
 
 $_INITIAL_EDITOR_VALUE = `
 
-%% dssddsa  %%
+
+
 -> start
 === start
 
-* hi
+* hi 
+
+
+* gagiu 
+
+
+* gaaasi
 
 -
 

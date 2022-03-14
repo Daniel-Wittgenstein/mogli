@@ -396,6 +396,8 @@ mogli_app = (function () {
     window.parent.on_ink_runtime_error = (ink_error_text, mogli_error_text,
         error_info) => {
         //MUST BE GLOBAL, SO IFRAME CAN CALL IT!
+        //ella guru
+        console.log("INK RUNTIME ERROR. line via secret tags:")
         let lnr = error_info.line_nr
         if (lnr) {
             add_mark(Number(lnr) - 1, ink_error_text)
@@ -409,6 +411,9 @@ mogli_app = (function () {
 
         let text = editor_get_value()
 
+        //ella guru
+        //text = preprocessor.strip_multiline_comments
+
         let p = preprocessor.process_content_blocks(text)
         if (p.error) {
             handle_preprocessor_error(p.error)
@@ -419,8 +424,6 @@ mogli_app = (function () {
         let extra_blocks = p.content_blocks
 
         text = preprocessor.process_script_for_error_tracking(text)
-
-//ella guru
 
         let result = compile(text)
 
@@ -864,7 +867,22 @@ mogli_app = (function () {
             })
 
             err_text += `<p style='${style}'>` + err.text + "</p>"
-            add_mark( (err.line_nr / 2) - 1, err.text)
+            if (!err.line_nr) {
+                throw `Wrong line nr????`
+                console.log(err)
+            }
+
+            //we want: 1/2 -> 1, 3/4 -> 2, 5/6 -> 3 etc.
+
+            let here = Math.ceil(err.line_nr / 2)
+            if (here <=0) throw `Out of bounds line number!`
+            if (Math.round(here) !== here) throw `Float line number???!`
+            try {
+                add_mark( here, err.text)
+            } catch(e) {
+                console.log("OUT OF BOUNDS LINE NUMBER???")
+            }
+            
         }
 
         display_error(err_text)
