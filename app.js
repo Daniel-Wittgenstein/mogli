@@ -403,25 +403,11 @@ mogli_app = (function () {
 
     }
 
-    function process_script_for_error_tracking(txt) {
-        let lines = txt.split("\n")
-        let out = ""
-        let index = 0
-        for (let line of lines) {
-            index ++
-            //out += `#$_info $--_.line:${line}$--_.line_nr:${index}\n`
-            //out += "# "+index+"\n"
-            out += "# y_x_x_x_x_x_x_y " + index + "\n"
-            out += line + "\n"  
-        }
-        return out
-    }
 
     function build_html_page() {
         const untitled = `untitled story`
 
         let text = editor_get_value()
-
 
         let p = preprocessor.process_content_blocks(text)
         if (p.error) {
@@ -432,11 +418,9 @@ mogli_app = (function () {
         text = p.text
         let extra_blocks = p.content_blocks
 
+        text = preprocessor.process_script_for_error_tracking(text)
 
-
-        text = process_script_for_error_tracking(text)
-
-
+//ella guru
 
         let result = compile(text)
 
@@ -449,6 +433,10 @@ mogli_app = (function () {
 
         let story = result.story
         let json_byte_code = story.ToJson()
+
+
+
+
 
         let runtime_data = flat_clone($_RUNTIME_DATA)
 
@@ -614,6 +602,7 @@ mogli_app = (function () {
             const compiler_opts =  new inkjs.CompilerOptions(
                 null, [], false, error_handler, file_handler )
             
+
             story = (new inkjs.Compiler(text, compiler_opts)).Compile()
 
             return {

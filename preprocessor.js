@@ -35,6 +35,22 @@ preprocessor = {
             text: text,
             content_blocks: extra_blocks,
         }
-    }
+    },
+
+    process_script_for_error_tracking(txt) {
+        let lines = txt.split("\n")
+        let out = ""
+        let index = 0
+        for (let line of lines) {
+            index ++
+            //out += `#$_info $--_.line:${line}$--_.line_nr:${index}\n`
+            //out += "# "+index+"\n"
+            out += "# y_x_x_x_x_x_x_y " + index + "\n"
+            out += line + "\n"
+        }
+        return out
+    },
+
+
 }
 

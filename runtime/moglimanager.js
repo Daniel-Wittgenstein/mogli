@@ -74,7 +74,6 @@ class MogliManager {
 
     on_ink_runtime_error(... args) {
         console.log("INK RUNTIME ERROR", args, this, this.error_tracker.last_line)
-
         let error_info = this.get_error_info_from_tag_line(this.error_tracker.last_line)
 
         let list = this.story._prevContainers.reverse()
@@ -432,7 +431,7 @@ class MogliManager {
 
         if (first_word === "y_x_x_x_x_x_x_y") {
             this.error_tracker.last_line = rest
-            console.log("SETTING LAST LINE TO", rest)
+            //console.log("SETTING LAST LINE TO", rest)
             return
         }
         
